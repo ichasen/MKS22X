@@ -1,0 +1,11 @@
+public class Recursion{
+    public int fact(int n){
+	factHelp (n,1);
+    }
+    public int factHelp(int n,int ans){
+	if (n == 0 || n == 1){
+	    return ans;
+	}
+	return factHelp (n - 1,sum * n);
+    }
+}
