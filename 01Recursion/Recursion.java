@@ -9,13 +9,13 @@ public class Recursion{
 	return factHelp (n - 1,ans * n);
     }
     public int fib (int n){
-	int current = 0;
-	int next = 1;
-	int ans = 0;
+	return fibHelp (n,0,1,0);
+    }
+    public int fibHelp (int n,int current, int next, int ans){
 	for (int i = 0;i<n;i++){
 	    ans = current + next;
 	    current = next;
-	    next = ans;
+	    ans = next;
 	}
 	return ans;
     }
