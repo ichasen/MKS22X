@@ -3,6 +3,9 @@ public class Recursion{
 	return factHelp (n,1);
     }
     public int factHelp(int n,int ans){
+	if (n < 0){
+	    throw new IllegalArgumentException("Enter a number >= 0");
+	}
 	if (n == 0 || n == 1){
 	    return ans;
 	}
