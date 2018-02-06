@@ -11,11 +11,14 @@ public class Recursion{
     public int fib (int n){
 	return fibHelp (n,0,1,0);
     }
-    public int fibHelp (int n,int current, int next, int ans){
+    public int fibHelp (int n,int current,int next, int ans){
+	if (n == 0){
+	    return 0;
+	}
 	for (int i = 0;i<n;i++){
 	    ans = current + next;
 	    current = next;
-	    ans = next;
+	    next = ans;
 	}
 	return ans;
     }
@@ -23,9 +26,15 @@ public class Recursion{
 	return sqrtHelp(n,1);
     }
     public double sqrtHelp(double n,double guess){
-	if ((guess / (1/n)) >= .9999 || (guess / (1/n)) <= 1.0001){
+	if (n == 0){
+	    return 0;
+	}
+	if (n == 1){
+	    return 1;
+	}
+	if (((guess * guess) / n) >= .9999 && ((guess * guess) / n) <= 1.0001){
 	    return guess;
 	}
-	return sqrtHelp (n, (n / guess + guess / 2));
+        return sqrtHelp (n, (n / guess + guess / 2));
     }
 }
