@@ -12,6 +12,15 @@ public class QueenBoard{
 	    board[r][c] = -1;
 	    return true;
 	}
+	int x = r + 1;
+	int y = r - 1;
+	for (int i = c + 1;i<board.length;i++){
+	    board[x][i] += 1;
+	    if (y >= 0){
+		board [y][i] -= 1;
+	    }
+	    x++;
+	}
 	return false;
     }
     private boolean removeQueen(int r,int c){
@@ -51,5 +60,11 @@ public class QueenBoard{
 	    }
 	}
 	return false;
+    }
+    public static void main (String[] args){
+	QueenBoard q = new QueenBoard(4);
+	if (q.solveH(4)){
+	    System.out.println("good");
+	}
     }
 }
