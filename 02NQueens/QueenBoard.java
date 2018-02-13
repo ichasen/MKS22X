@@ -61,6 +61,15 @@ public class QueenBoard{
 	}
 	return false;
     }
+    public int countSolutions(){
+	return countH (1,0);
+    }
+    public int countH(int ans,int current){
+	if (current >= board.length){
+	    return ans;
+	}
+	return (ans + current) * ans;
+    }
     public static void main (String[] args){
 	QueenBoard q = new QueenBoard(4);
 	if (q.solveH(4)){
