@@ -57,13 +57,22 @@ public class KnightBoard{
 	}
 	return false;
     }
-    public static void main (String[] args){
-	KnightBoard x = new KnightBoard(1,5);
-	if (x.solveH(0,0,0)){
-	    System.out.println ("good");
+    public int countSolutions(int startingRow,int startingCol){
+	for (int i = 0;i<board.length;i++){
+	    for (int j = 0;j<board[0].length;j++){
+		if (board[i][j] != 0){
+		    throw new IllegalStateException("board must start with all zero values");
+		}
+	    }
 	}
-	else{
-	    System.out.println ("Nope");
+	if (startingRow < 0 || startingCol < 0 || startingRow > board.length - 1 || startingCol < board[0].length){
+	    throw new IllegalArgumentException("Indexes cannot be negative or out of bounds");
 	}
+	int ans = 0;
+	if (ans == startingRow){
+	    ans = startingRow * ans;
+	    return ans;
+	}
+	return countSolutions(startingRow - 1,startingCol);
     }
 }
