@@ -11,13 +11,13 @@ public class Maze{
 	    for (int i = 0;i<y;i++){
 		for (int j = 0;j<y;j++){
 		    while (s.hasNext()){
-			maze[i][j] = s.nextLine().charAt(i);
+			maze[i][j] = 1;
 		    }
 		}
 	    }
 	}
 	catch (FileNotFoundException f){
-	    System.out.println("File not found");
+	    System.exit(1);
 	}
     }
     private void wait(int millis){
@@ -71,15 +71,6 @@ public class Maze{
 	}
 
         return -1; 
-    }
-    public static void main(String[]args){
-        Maze f;
-        f = new Maze("data1.dat");//true animates the maze.
-        
-        f.setAnimate(true);
-        f.solve();
-
-        System.out.println(f);
     }
 
 }
