@@ -3,21 +3,36 @@ import java.io.*;
 public class Maze{
     private char[][]maze;
     private boolean animate;//false by default
-    public Maze(String filename){
+    public Maze(String filename) {
 	try{
+	    int length = 0;
 	    File x = new File (filename);
 	    Scanner s = new Scanner (x);
-	    int y = s.nextLine().length();
-	    for (int i = 0;i<y;i++){
-		for (int j = 0;j<y;j++){
-		    while (s.hasNext()){
-			maze[i][j] = 1;
-		    }
+	    String line2;
+	    while (s.hasNextLine()){
+		line2 = s.nextLine();
+		length++;
+	    }
+	    s = new Scanner (x);
+	    String line = s.nextLine();
+	    int y = line.length();
+	    maze = new char [length][y];
+	    int current = 0;
+	    for (int i = 0;i<y-1;i++){
+		maze[current][i] = line.charAt(i);
+	    }
+	    current++;
+	    while (s.hasNextLine()){
+		line = s.nextLine();
+		for (int i = 0;i<y-1;i++){
+		    maze[current][i] = line.charAt(i);
 		}
+	    
+		current++;
 	    }
 	}
-	catch (FileNotFoundException f){
-	    System.exit(1);
+	catch(FileNotFoundException f){
+	    System.out.println("File not found");
 	}
     }
     private void wait(int millis){
@@ -71,6 +86,15 @@ public class Maze{
 	}
 
         return -1; 
+    }
+    public static void main(String[]args){
+        Maze f;
+        f = new Maze("data1.dat");//true animates the maze.
+        
+        f.setAnimate(true);
+        f.solve();
+
+        System.out.println(f);
     }
 
 }
