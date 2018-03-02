@@ -70,10 +70,5 @@ public class QueenBoard{
 	}
 	return (ans + current) * ans;
     }
-    public static void main (String[] args){
-	QueenBoard q = new QueenBoard(4);
-	if (q.solveH(4)){
-	    System.out.println("good");
-	}
-    }
+    
 }
