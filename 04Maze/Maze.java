@@ -58,33 +58,29 @@ public class Maze{
 	    wait(20);
         }
 	int ans = 0;
-        for (int i = 0;i<maze.length;i++){
-	    for (int j = 0;j<maze[0].length;j++){
-		if (maze[i][j] == 'S'){
-		    maze[i][j] = '@';
-		}
-		if (maze[i][j] == 'E'){
-		    return ans;
-		}
-		if ((maze[i-1][j] == '@' || maze[i-1][j-1] == '@' || maze[i][j-1] == '@' || maze[i+1][j-1] == '@' || maze[i+1][j] == '@' || maze[i+1][j+1] == '@' || maze[i][j+1] == '@' || maze[i-1][j+1] == '@') && maze[i][j] == ' '){
-		    maze[i][j] = '@';
-		    return solveH(i,j);
-	        }
-		else{
-		    for (int x = 0;i<maze.length;i++){
-			for (int y = 0;j<maze[0].length;j++){
-			    if (maze[x][y] != '#'){
-				maze[x][y] = ' ';
-			    }
-			    if (maze[x][y] == 'S'){
-				return solveH (x,y);
-			    }
-			}
-		    }
-		}
-	    }
+	char r = maze[row][col+1];
+	char l = maze[row][col - 1];
+	char u = maze[row - 1][col];
+	char d = maze[row + 1][col];
+	if (r == 'E' || l == 'E' || u == 'E' || d == 'E') {
+	    return ans;
 	}
-
+	if (r == ' ') {
+	    ans += 1;
+	    return solveH(row,col+1);
+	}
+	if (d == ' ') {
+	    ans += 1;
+	    return solveH(row+1,col);
+	}
+	if (l == ' ') {
+	    ans += 1;
+	    return solveH(row,col-1);
+	}
+	if (u == ' ') {
+	    ans += 1;
+	    return solveH(row-1,col);
+	}
         return -1; 
     }
     public static void main(String[]args){
