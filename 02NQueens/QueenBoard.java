@@ -1,6 +1,7 @@
 public class QueenBoard{
     private int[][] board;
     public QueenBoard(int size){
+	board = new int[size][size];
 	for (int i = 0;i<board.length;i++){
 	    for (int j = 0;j<board.length;j++){
 		board[i][j] = 0;
@@ -62,13 +63,23 @@ public class QueenBoard{
 	return false;
     }
     public int countSolutions(){
-	return countH (1,0);
+	return countH (0,0);
     }
-    public int countH(int ans,int current){
-	if (current >= board.length){
-	    return ans;
+    public int countH(int ans,int c){
+	if (c >= board.length){
+	    ans++;
 	}
-	return (ans + current) * ans;
+	else{
+	    for (int i = 0; i < board.length; i++){
+		for (int j = 0;j<board[0].length;j++){
+		    if (board[i][j] == 0){
+			addQueen(i,j);
+			countH(ans,c + 1);
+			removeQueen(i,j);
+		    }
+		}
+	    }
+	}
+	return ans;
     }
-    
 }
