@@ -24,4 +24,24 @@ public class Quick{
 	}
 	return large;
     }
+    public static int quickselect(int[] data, int k){
+	int[] data2 = new int[partition(data,0,data.length-1)];
+	int[] data3 = new int[partition(data,k,data.length-1)];
+	if (partition(data,0,data.length-1) > k){
+	    for (int i = 0;i<data2.length;i++){
+		data2[i] = data[i];
+	    }
+	    return quickselect(data2,k);
+	}
+	else if (partition(data,0,data.length-1) < k){
+	    for (int j = 0;j<data3.length;j++){
+		data3[j] = data[j];
+	    }
+	    return quickselect(data3,0);
+	}
+	else{
+	    return data[partition(data,0,data.length-1)];
+	}
+	return 0;
+    }
 }
