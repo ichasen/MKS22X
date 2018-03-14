@@ -1,12 +1,11 @@
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Random;
 public class Quick{
-    public int partition(int [] data, int start, int end){
+    public int partition(int[] data, int start, int end){
 	Random r = new Random();
-	int pivot = data.get(r.nextInt(data.size()));
-	int x = data.get(start);
-	data.set(data.indexOf(pivot),x);
+	int pivot = data[r.nextInt(data.size())];
+	int x = data[start];
+	data[data.indexOf(pivot),x];
 	data.set(start,pivot);
 	int small = start+1;
 	int large = end;
