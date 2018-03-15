@@ -8,23 +8,36 @@ public class Quick{
 	data[start] = data[pivot];
 	data[pivot] = x;
 	int small = start+1;
+	int i = small + 1;
 	int large = end;
-	while (small < large){
-	    if (data[small] > pivot){
-		int m = data[small];
+	while (i < large){
+	    if (data[i] > pivot){
+		int m = data[i];
 		int n = data[large];
-		data[small] = n;
+		data[i] = n;
 		data[large] = m;
 		large = large - 1;
 	    }
+	    else if (data[i] == pivot){
+		i++;
+	    }
 	    else{
+		int a = data[small];
+		int b = data[i];
+		data[small] = b;
+		data[i] = a;
 		small++;
+		i++;
 	    }
 	}
-	int p = data[pivot];
-	data[pivot] = data[start];
-	data[start] = p;
-	return large;
+	if(data.length == 1){
+	    return large;
+	}
+	else{
+	    partition(data,start,small-1);
+	    partition(data,i,end);
+	}
+	return 0;
     }
     public static int quickselect(int[] data, int k){
 	Quick q = new Quick();
