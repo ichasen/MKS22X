@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 public class Quick{
-    public int partition(int[] data, int start, int end){
+    public static int partition(int[] data, int start, int end){
 	Random r = new Random();
 	int pivot = data[r.nextInt(data.length)];
 	int x = data[start];
@@ -29,7 +29,7 @@ public class Quick{
 		small++;
 		i++;
 	    }
-	}
+`	}
 	if(data.length == 1){
 	    return large;
 	}
@@ -58,6 +58,13 @@ public class Quick{
 	}
 	else{
 	    return data[q.partition(data,0,data.length-1)];
+	}
+    }
+    public static void quickSort(int[] data){
+	Quick q = new Quick();
+	if((q.partition(data,0,data.length)) != 1){
+	    partition(data,start,small-1);
+	    partition(data,i,end);
 	}
     }
 }
