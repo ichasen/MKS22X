@@ -9,39 +9,50 @@ public class QueenBoard{
 	}
     }
     private boolean addQueen(int r,int c){
-        if (board[r][c] == 0){
+	if (board [r][c] == 0){
 	    board[r][c] = -1;
-	    return true;
-	}
-	int x = r + 1;
-	int y = r - 1;
-	for (int i = c + 1;i<board.length;i++){
-	    board[x][i] += 1;
-	    if (y >= 0){
-		board [y][i] -= 1;
+	    for(int i = c + 1;i < board.length; i++){
+		board[r][i] += 1;
 	    }
-	    x++;
+	    for (int i=r+1,j=c+1;i<board.length && j<board.length;i++,j++){
+		board[i][j] += 1;
+	    }
+	    for (int i=r-1,j=c+1;i>=0 && j<board.length;i--,j++){
+		board[i][j] += 1;
+	    }	    
+	    return true;
 	}
 	return false;
     }
     private boolean removeQueen(int r,int c){
-	if (board[r][c] == 0){
+	if (board[r][c] != -1) {
 	    return false;
 	}
-	board[r][c] = 0;
-	return true;
+	else{
+	    board[r][c]++;
+	    for (int i=1; c+i<board.length;i++){
+		board[r][c+i] -= 1;
+		if (r+i < board.length){
+		    board[r+i][c+i] -= 1;
+		}
+		if (r-i >= 0){
+		    board[r-i][c+i] -= 1;
+		}
+	    }
+	    return true;
+	}
     }
     public String toString(){
 	String result = "";
 	for (int i = 0;i<board.length;i++){
 	    for (int j = 0;j<board.length;j++){
 		if (board[i][j] == -1){
-		    result += " Q";
+		    result += "Q ";
 		}else{
-		    result += " _";
+		    result += "_ ";
 		}
 	    }
-	    result += "/n";
+	    result += "\n";
 	}
 	return result;
     }
@@ -57,26 +68,26 @@ public class QueenBoard{
 		if (solveH(current + 1)){
 		    return true;
 		}
-		removeQueen (i,current);
+		else{
+		    removeQueen (i,current);
+		}
 	    }
 	}
 	return false;
     }
     public int countSolutions(){
-	return countH (0,0);
+	return countH (0);
     }
-    public int countH(int ans,int c){
+    public int countH(int c){
+	int ans = 0;
 	if (c >= board.length){
 	    ans++;
 	}
 	else{
 	    for (int i = 0; i < board.length; i++){
-		for (int j = 0;j<board[0].length;j++){
-		    if (board[i][j] == 0){
-			addQueen(i,j);
-			countH(ans,c + 1);
-			removeQueen(i,j);
-		    }
+		if (addQueen(i,c)){
+		    ans += countH(c+1);
+		    removeQueen(i,c);
 		}
 	    }
 	}
