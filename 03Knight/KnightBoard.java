@@ -1,5 +1,6 @@
 public class KnightBoard{
     private int[][] board;
+    private int[][] possibleMoves = {{2,1},{2,-1},{1, 2},{1, -2},{-1, 2},{-1, -2},{-2, 1},{-2,  -1}};
     public KnightBoard(int startingRows, int startingCols){
 	board = new int [startingRows][startingCols];
 	if (startingRows < 0 || startingCols < 0){
@@ -41,11 +42,20 @@ public class KnightBoard{
 	return false;
     }
     public int countSolutions(int startingRow,int startingCol){
+	return countH(startingRow, startingCol, 1);
+    }
+    public int countH(int startingRow, int startingCol, int level){
 	int ans = 0;
-	if (ans == startingRow){
-	    ans = startingRow * ans;
+	if (board[startingRow][startingCol] == board.length * board[0].length){
+	    return 1;
+        }
+	else{
+	    for (int i[]: possibleMoves){
+		if (//check if it is 0){
+		    //increment by countH of that startingrow and col
+		    }
+	    }
 	    return ans;
 	}
-	return countSolutions(startingRow - 1,startingCol);
     }
 }
