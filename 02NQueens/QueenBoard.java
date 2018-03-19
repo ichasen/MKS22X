@@ -8,7 +8,7 @@ public class QueenBoard{
 	    }
 	}
     }
-    private boolean addQueen(int r,int c){
+    public boolean addQueen(int r,int c){
 	if (board [r][c] == 0){
 	    board[r][c] = -1;
 	    for(int i = c + 1;i < board.length; i++){
@@ -24,7 +24,7 @@ public class QueenBoard{
 	}
 	return false;
     }
-    private boolean removeQueen(int r,int c){
+    public boolean removeQueen(int r,int c){
 	if (board[r][c] != -1) {
 	    return false;
 	}
@@ -81,7 +81,7 @@ public class QueenBoard{
     public int countH(int c){
 	int ans = 0;
 	if (c >= board.length){
-	    ans++;
+	    return 1;
 	}
 	else{
 	    for (int i = 0; i < board.length; i++){
