@@ -42,22 +42,20 @@ public class KnightBoard{
 	return false;
     }
     public int countSolutions(int startingRow,int startingCol){
-	for (int i = 0;i<board.length;i++){
-	    for (int j = 0;j<board[0].length;j++){
-		if (board[i][j] != 0){
-		    throw new IllegalStateException("board must start with all zero values");
-		}
-	    }
-	}
-	if (startingRow < 0 || startingCol < 0 || startingRow > board.length - 1 || startingCol < board[0].length){
-	    throw new IllegalArgumentException("Indexes cannot be negative or out of bounds");
-	}
+	return countH(startingRow, startingCol, 1);
+    }
+    public int countH(int startingRow, int startingCol, int level){
 	int ans = 0;
-	if (ans == startingRow){
-	    ans = startingRow * ans;
+	if (board[startingRow][startingCol] == board.length * board[0].length){
+	    return 1;
+        }
+	else{
+	    for (int i[]: possibleMoves){
+		if (//check if it is 0){
+		    //increment by countH of that startingrow and col
+		    }
+	    }
 	    return ans;
 	}
-	return countSolutions(startingRow - 1,startingCol);
     }
-    
 }
