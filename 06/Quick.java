@@ -5,7 +5,8 @@ import java.lang.Math;
 public class Quick{
     public static int partition(int[] data, int start, int end){
 	Random r = new Random();
-	int pivot = data[r.nextInt(data.length)];
+	int pivotDigit = r.nextInt(end-start) + start;
+	int pivot = data[pivotDigit];
 	int i = start+1;
 	int small = start;
 	int large = end-1;
@@ -53,14 +54,14 @@ public class Quick{
     }
 
     public static void quickH(int[] data,int start,int end){
-	if(data.length == 0){
+	if(data.length == 1){
 	    return;
 	}
 	if(start < end){
 	    int pivot = partition(data,start,end);
-	    quickH(data,start,pivot-1);	
+	    quickH(data,start,pivot);	
 	    quickH(data,pivot+1,end);
-	}
+	}	
     }
     private static final int INCREASE = 0;
     private static final int DECREASE = 1;
