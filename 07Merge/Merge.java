@@ -14,13 +14,18 @@ public class Merge{
 	merge(data,temp,lo,mid,hi);
     }
     public static void merge(int[] data,int[] temp,int lo,int mid,int hi){
-	int x = mid+1;
-	for(int i=0,j=mid+1;i<mid && j<hi;i++){
-	    if (temp[i]<=temp[j]){
-		data[i] = temp[i];
+	int small = lo;
+	int i = 0;
+	int x = mid + 1;
+	int large = hi;
+	while (small<=mid && x<=large){
+	    if (temp[small] <= temp[x]){
+		data[i] = temp[small];
+		small++;
 	    }
-	    else{
-		data[i] = temp[j];
+	    else if (temp[small] > temp[x]){
+		data[i] = temp[x];
+		x++;
 	    }
 	}
     }
