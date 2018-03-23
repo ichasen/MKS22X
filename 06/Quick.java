@@ -3,11 +3,11 @@ import java.util.Random;
 import java.util.Arrays;
 import java.lang.Math;
 public class Quick{
-    public static int partition(int[] data, int start, int end){
+    public static int[] partition(int[] data, int start, int end){
 	Random r = new Random();
 	int pivotDigit = r.nextInt(end-start) + start;
 	int pivot = data[pivotDigit];
-	int i = start+1;
+	int i = start;
 	int small = start;
 	int large = end-1;
 	while(i <= large){
@@ -23,7 +23,10 @@ public class Quick{
 		i++;
 	    }
 	}
-	return large;
+	int[] ans = new int[2];
+	ans[0] = small;
+	ans[1] = large;
+	return ans;
     }
 
     private static void swap(int[] data, int a, int b){
@@ -35,7 +38,8 @@ public class Quick{
 	int small = 0;
 	int large = data.length - 1;
 	while(small<large){
-	    int pivot = partition(data,small,large);
+	    int[] partitioned = partition(data,small,large);
+	    int pivot = partitioned[1];
 	    if(pivot < k){
 		small = pivot + 1;
 	    }
@@ -54,14 +58,15 @@ public class Quick{
     }
 
     public static void quickH(int[] data,int start,int end){
-	if(data.length == 1){
+	if(end - start + 1 <= 1){
 	    return;
 	}
-	if(start < end){
-	    int pivot = partition(data,start,end);
-	    quickH(data,start,pivot);	
+	else{
+	    int[] partitioned = partition(data,start,end);
+	    int pivot = partitioned[1];
+	    quickH(data,start,pivot);
 	    quickH(data,pivot+1,end);
-	}	
+	}
     }
     private static final int INCREASE = 0;
     private static final int DECREASE = 1;
