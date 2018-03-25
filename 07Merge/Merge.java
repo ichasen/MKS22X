@@ -2,13 +2,13 @@ import java.util.Arrays;
 public class Merge{
     public static void mergesort(int[] data){
 	int[] temp = new int [data.length];
-	msort(data,temp,0,data.length);
+	msort(data,temp,0,data.length - 1);
     }
     public static void msort(int[] data, int[] temp, int lo, int hi){
 	if (lo >= hi){
 	    return;
 	}
-	int mid = (lo + hi)/2;
+	int mid = (lo + hi)/2 + 1;
 	msort(temp,data,lo,mid);
 	msort(temp,data,mid+1,hi);
 	merge(data,temp,lo,mid,hi);
@@ -16,18 +16,22 @@ public class Merge{
     public static void merge(int[] data,int[] temp,int lo,int mid,int hi){
 	int small = lo;
 	int i = 0;
-	int x = mid + 1;
 	int large = hi;
-	while (small<=mid && x<=large){
-	    if (temp[small] <= temp[x]){
-		data[i] = temp[small];
+	while (small<mid && mid<=large){
+	    if (data[small] <= data[mid]){
+		temp[i] = data[small];
 		small++;
+		i++;
 	    }
-	    else if (temp[small] > temp[x]){
-		data[i] = temp[x];
-		x++;
+	    else if (temp[small] > temp[mid]){
+		temp[i] = data[mid];
+		mid++;
+		i++;
 	    }
 	}
+	for(int j = small;j<=large;j++){
+	    data[j] = temp[j];
+	}	
     }
     private static final int INCREASE = 0;
     private static final int DECREASE = 1;
