@@ -14,13 +14,6 @@ public class MyLinkedList{
     public int set(int index,int newValue){
 	return index;
     }
-    public String toString(){
-	String ans = "[";
-	for (int i = 0;i<size;i++){
-	}
-	ans += "]";
-	return ans;
-    }
     public boolean add(int value){
 	Node n = new Node();
 	size += 1;
@@ -36,11 +29,19 @@ public class MyLinkedList{
 	public Node getPrev(){
 	    return prev;
 	}
+	public void setNext(Node newValue){
+	    next = newValue;
+	}
+	public void setPrev(Node newValue){
+	    prev = newValue;
+	}
 	public int getValue(){
 	    return data;
 	}
 	public String toString(){
-	    
+	    String ans = "";
+	    ans += data;
+	    return ans;
 	}
     }
 }
