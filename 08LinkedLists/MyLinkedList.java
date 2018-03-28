@@ -9,8 +9,22 @@ public class MyLinkedList{
 	return size;
     }
     public int get(int index){
+	
     }
     public int set(int index,int newValue){
+	return index;
+    }
+    public String toString(){
+	String ans = "[";
+	for (int i = 0;i<size;i++){
+	}
+	ans += "]";
+	return ans;
+    }
+    public boolean add(int value){
+	Node n = new Node();
+	size += 1;
+	return true;
     }
     private class Node{
 	Node next;
@@ -23,8 +37,10 @@ public class MyLinkedList{
 	    return prev;
 	}
 	public int getValue(){
+	    return data;
 	}
 	public String toString(){
+	    
 	}
     }
 }
