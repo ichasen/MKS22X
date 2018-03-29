@@ -29,9 +29,8 @@ public class MyLinkedList{
     public boolean add(int value){
 	Node n = new Node();
 	n.setData(value);
-	getNode(end-1).setNext(value);
-	for (int i = 0;i<end-1;i++){
-	    getNode(i).setNext
+	getNode(size-1).setNext(n);
+	n.setPrev(getNode(size-1));
 	size += 1;
 	return true;
     }
@@ -54,12 +53,12 @@ public class MyLinkedList{
 	public void setPrev(Node newPrev){
 	    prev = newPrev;
 	}
-	public void setData(Node newData){
+	public void setData(int newData){
 	    data = newData;
 	}
 	public String toString(){
 	    String ans = "";
-	    ans += data;
+	    ans += "Previous: " + prev + "/n" + "Current: " + data + "/n" +  "Next: " + next;
 	    return ans;
 	}
     }
