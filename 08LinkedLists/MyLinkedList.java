@@ -58,6 +58,45 @@ public class MyLinkedList{
 	}
 	return -1;
     }
+    public void add(int index,Integer value){
+	Integer i = getNode(index).getValue();
+	getNode(index).setValue(value);
+	for (int j = size;j<size + (size-index);j++){
+	    add(getNode(index + j).getValue());
+        }
+	for (int x = 0;x<size;x++){
+	    remove(x);
+	}
+    }
+    public boolean remove(Integer value){
+	for (int i = 0;i<size;i++){
+	    if (getNode(i).getValue() == value){
+		for (int j = i;j<size;j++){
+		    if (j==size-1){
+			getNode(j).setValue(null);
+		    }else{
+			getNode(j).setValue(getNode(j+1).getValue());
+		    }
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    public Integer remove (int index){
+	if (index < 0 || index >= size){
+	    throw new IndexOutOfBoundsException();
+	}
+	Integer i = getNode(index).getValue();
+	for (int j = index;j<size;j++){
+	    if (j==size-1){
+		getNode(j).setValue(null);
+	    }else{
+		getNode(j).setValue(getNode(j+1).getValue());
+	    }
+	}
+	return i;
+    }
     private class Node{
 	Node next;
 	Node prev;
