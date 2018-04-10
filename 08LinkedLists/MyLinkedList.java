@@ -59,42 +59,47 @@ public class MyLinkedList{
 	return -1;
     }
     public void add(int index,Integer value){
-	Integer i = getNode(index).getValue();
-	getNode(index).setValue(value);
-	for (int j = size;j<size + (size-index);j++){
-	    add(getNode(index + j).getValue());
-        }
-	for (int x = 0;x<size;x++){
-	    remove(x);
+	if (index >= size || index < 0){
+	    throw new IndexOutOfBoundsException();
+	}
+	Node n = new Node();
+	n.setValue(value);
+	if (index == size){
+	    add(value);
+	}
+	else if (index == 0){
+	    n.setNext(start);
+	    start.setPrev(n);
+	    start = n;
+	    size++;
+	}
+	else{
+	    getNode(index-1).setNext(n);
+	    n.setPrev(getNode(index-1));
+	    n.setNext(getNode(index));
+	    getNode(index).setPrev(n);
+	    size++;
 	}
     }
     public boolean remove(Integer value){
-	for (int i = 0;i<size;i++){
-	    if (getNode(i).getValue() == value){
-		for (int j = i;j<size;j++){
-		    if (j==size-1){
-			getNode(j).setValue(null);
-		    }else{
-			getNode(j).setValue(getNode(j+1).getValue());
-		    }
-		    return true;
-		}
-	    }
+	if (indexOf(value) < 0 || indexOf(value) >= size){
+	    return false;
 	}
-	return false;
+	remove(indexOf(value));
+	return true;
     }
     public Integer remove (int index){
 	if (index < 0 || index >= size){
 	    throw new IndexOutOfBoundsException();
 	}
 	Integer i = getNode(index).getValue();
-	for (int j = index;j<size;j++){
-	    if (j==size-1){
-		getNode(j).setValue(null);
-	    }else{
-		getNode(j).setValue(getNode(j+1).getValue());
-	    }
+	if (index - 1 >= 0 && index-1 < size){
+	    getNode(index-1).setNext(getNode(index + 1));
 	}
+	if (index+1 < size){
+	    getNode(index+1).setPrev(getNode(index - 1));
+	}
+	size--;
 	return i;
     }
     private class Node{
