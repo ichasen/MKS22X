@@ -1,3 +1,4 @@
+import java.util.*;
 public class MyLinkedListImproved<T>{
     Node start;
     Node end;
@@ -23,7 +24,7 @@ public class MyLinkedListImproved<T>{
     public T get(int index){
 	return getNode(index).getValue();
     }
-    public T set(int index,int newValue){
+    public T set(int index,T newValue){
 	Node n = getNode(index);
         n.setValue(newValue);
 	return n.getValue();
@@ -37,7 +38,7 @@ public class MyLinkedListImproved<T>{
 	ans += "]";
 	return ans;
     }
-    public boolean add(int value){
+    public boolean add(T value){
 	Node n = new Node();
 	n.setValue(value);
 	getNode(size-1).setNext(n);
@@ -50,7 +51,7 @@ public class MyLinkedListImproved<T>{
 	start = null;
 	end = start;
     }
-    public int indexOf(Integer value){
+    public int indexOf(T value){
 	for (int i = 0;i<size;i++){
 	    if (getNode(i).getValue() == value){
 		return i;
@@ -97,6 +98,8 @@ public class MyLinkedListImproved<T>{
 	}
 	return i;
     }
+    public void extend(MyLinkedListImproved<T> other){
+    }
     private class Node{
 	Node next;
 	Node prev;
@@ -126,4 +129,23 @@ public class MyLinkedListImproved<T>{
 	    return ans;
 	}
     }
+    public class LLIterator implements Iterator<T>{
+	Node next;
+	public boolean hasNext(){
+	    if (next.getNext == null){
+		return false;
+	    }
+	    return true;
+	}
+	public T next(){
+	    if (hasNext()){
+		return next.getNext();
+		return null;
+	    }
+	    else{
+		System.exit(0);
+	    }
+	}
+    }
+		    
 }
