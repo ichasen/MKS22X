@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedListImproved<T>{
+public class MyLinkedListImproved<T extends Comparable<T>>{
     Node start;
     Node end;
     int size;
@@ -99,6 +99,7 @@ public class MyLinkedListImproved<T>{
 	return i;
     }
     public void extend(MyLinkedListImproved<T> other){
+	
     }
     private class Node{
 	Node next;
@@ -131,6 +132,7 @@ public class MyLinkedListImproved<T>{
     }
     public class LLIterator implements Iterator<T>{
 	Node next;
+	T n;
 	public boolean hasNext(){
 	    if (next.getNext() == null){
 		return false;
@@ -139,12 +141,13 @@ public class MyLinkedListImproved<T>{
 	}
 	public T next(){
 	    if (hasNext()){
-		return next.getNext().getValue();
-	    }
-	    else{
+		n = next.getValue();
+		next = next.getNext();
+		return n;
+	    }else{
 		System.exit(0);
+		return null;
 	    }
-	    return null;
 	}
     }
 		    
