@@ -59,7 +59,7 @@ public class MyLinkedListImproved<T>{
 	}
 	return -1;
     }
-    public void add(int index,Integer value){
+    public void add(int index,T value){
 	T i = getNode(index).getValue();
 	getNode(index).setValue(value);
 	for (int j = size;j<size + (size-index);j++){
@@ -69,7 +69,7 @@ public class MyLinkedListImproved<T>{
 	    remove(x);
 	}
     }
-    public boolean remove(Integer value){
+    public boolean remove(T value){
 	for (int i = 0;i<size;i++){
 	    if (getNode(i).getValue() == value){
 		for (int j = i;j<size;j++){
@@ -84,7 +84,7 @@ public class MyLinkedListImproved<T>{
 	}
 	return false;
     }
-    public Integer remove (int index){
+    public T remove (int index){
 	if (index < 0 || index >= size){
 	    throw new IndexOutOfBoundsException();
 	}
@@ -103,7 +103,7 @@ public class MyLinkedListImproved<T>{
     private class Node{
 	Node next;
 	Node prev;
-	int data;
+	T data;
 	public Node getNext(){
 	    return next;
 	}
@@ -119,7 +119,7 @@ public class MyLinkedListImproved<T>{
 	public T getValue(){
 	    return data;
 	}
-	public void setValue(Integer newValue){
+	public void setValue(T newValue){
 	    data = newValue;
 	}
 	public String toString(){
@@ -132,19 +132,19 @@ public class MyLinkedListImproved<T>{
     public class LLIterator implements Iterator<T>{
 	Node next;
 	public boolean hasNext(){
-	    if (next.getNext == null){
+	    if (next.getNext() == null){
 		return false;
 	    }
 	    return true;
 	}
 	public T next(){
 	    if (hasNext()){
-		return next.getNext();
-		return null;
+		return next.getNext().getValue();
 	    }
 	    else{
 		System.exit(0);
 	    }
+	    return null;
 	}
     }
 		    
