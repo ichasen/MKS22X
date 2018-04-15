@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedListImproved<T extends Comparable<T>>{
+public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T>{
     Node start;
     Node end;
     int size;
@@ -97,6 +97,39 @@ public class MyLinkedListImproved<T extends Comparable<T>>{
 	    }
 	}
 	return i;
+    }
+    public int max(){
+	if (size == 0){
+	    return -1;
+	}
+	if (size == 1){
+	    return 0;
+	}
+	int max = 0;
+	for (int i = 1;i<size;i++){
+	    if (getNode(i).getValue().compareTo(getNode(max).getValue()) > 0){
+		max = i;
+	    }
+	}
+	return max;
+    }
+    public int min(){
+	if (size == 0){
+	    return -1;
+	}
+	if (size == 1){
+	    return 0;
+	}
+	int min = 0;
+	for (int i = 1;i<size;i++){
+	    if (getNode(i).getValue().compareTo(getNode(min).getValue()) < 0){
+		min = i;
+	    }
+	}
+	return min;
+    }
+    public LLIterator iterator(){
+	return new LLIterator();
     }
     public void extend(MyLinkedListImproved<T> other){
 	
