@@ -132,7 +132,10 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	return new LLIterator();
     }
     public void extend(MyLinkedListImproved<T> other){
-	
+	end.setNext(other.start);
+	other.start.setPrev(this.end);
+	end = other.end;
+	size = size + other.size();
     }
     private class Node{
 	Node next;
