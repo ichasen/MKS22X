@@ -7,9 +7,6 @@ public class MyLinkedList{
 	size = 0;
     }
     private Node getNode(int index){
-	if (index<0 || index>=size){
-	    throw new IndexOutOfBoundsException();
-	}
 	int current = 0;
 	Node n = start;
 	while(current < index){
@@ -25,6 +22,9 @@ public class MyLinkedList{
 	return getNode(index).getValue();
     }
     public Integer set(int index,int newValue){
+	if (index < 0 || index > size){
+	    throw new IndexOutOfBoundsException();
+	}
 	Node n = getNode(index);
         n.setValue(newValue);
 	return n.getValue();
@@ -41,9 +41,20 @@ public class MyLinkedList{
     public boolean add(int value){
 	Node n = new Node();
 	n.setValue(value);
-	getNode(size-1).setNext(n);
-	n.setPrev(getNode(size-1));
-	size += 1;
+	if (size == 0){
+	    start = n;
+	    end = start;
+	}
+	else if (size == 1){
+	    end = n;
+	    start.setNext(end);
+	    end.setPrev(start);
+	}
+	else{
+	    end.setNext(n);
+	    n.setPrev(end);
+	    end = n;
+	}
 	return true;
     }
     public void clear(){
@@ -60,17 +71,20 @@ public class MyLinkedList{
 	return -1;
     }
     public void add(int index,Integer value){
-	if (index >= size || index < 0){
+	if (index > size || index < 0){
 	    throw new IndexOutOfBoundsException();
 	}
 	Node n = new Node();
 	n.setValue(value);
 	if (index == size){
 	    add(value);
+	    size++;
 	}
 	else if (index == 0){
-	    n.setNext(start);
+	    start = new Node();
+	    start = getNode(0);
 	    start.setPrev(n);
+	    n.setNext(start);
 	    start = n;
 	    size++;
 	}
@@ -131,6 +145,5 @@ public class MyLinkedList{
 	    ans += "Previous: " + prev + "/n" + "Current: " + data + "/n" +  "Next: " + next;
 	    return ans;
 	}
-    }
+    }   
 }
-	
