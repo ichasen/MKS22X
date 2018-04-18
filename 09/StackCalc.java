@@ -1,4 +1,4 @@
-public class Eval{
+public class StackCalc{
     public static double eval (String stuff){
 	String[] numsAndOps = stuff.split(" ");
 	String ops = "+-*/%";
