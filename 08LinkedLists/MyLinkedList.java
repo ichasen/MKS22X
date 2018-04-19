@@ -25,7 +25,7 @@ public class MyLinkedList{
 	return getNode(index).getValue();
     }
     public Integer set(int index,int newValue){
-	if (index < 0 || index > size){
+	if (index < 0 || index >= size){
 	    throw new IndexOutOfBoundsException();
 	}
 	Node n = getNode(index);
