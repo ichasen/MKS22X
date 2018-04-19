@@ -25,7 +25,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 	return getNode(index).getValue();
     }
     public T set(int index,T newValue){
-	if (index < 0 || index > size){
+	if (index < 0 || index >= size){
 	    throw new IndexOutOfBoundsException();
 	}
 	Node n = getNode(index);
