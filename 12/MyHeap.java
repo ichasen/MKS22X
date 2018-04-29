@@ -16,23 +16,29 @@ public class MyHeap<String extends Comparable<String>>{
 	}
 	return -1;
     }
-    private void switch(String element,String el2){
-	String temp = element;
-	heap[indexOf(element)] = el2;
-	heap[indexOf(el2)] = temp;
-    }
     private void pushDown(String parent,String child1,String child2,boolean isMaxHeap){
 	if (isMaxHeap){
-	    if (child1 >= child2){
-		switch(parent,child1);
-	    }else{
-		switch(parent,child2);
+	    if (child1.compareTo(child2) >= 0){
+	        String temp = parent;
+		heap[indexOf(parent)] = child1;
+		heap[indexOf(child1)] = temp;
 	    }
-	}else{
-	    if (child1 <= child2){
-		switch(parent,child1);
-	    }else{
-		switch(parent,child2);
+	    else{
+		String temp = parent;
+		heap[indexOf(parent)] = child2;
+		heap[indexOf(child2)] = temp;
+	    }
+	}
+	else{
+	    if (child1.compareTo(child2) <= 0){
+		String temp = parent;
+		heap[indexOf(parent)] = child1;
+		heap[indexOf(child1)] = temp;
+	    }
+	    else{
+	        String temp = parent;
+		heap[indexOf(parent)] = child2;
+		heap[indexOf(child2)] = temp;
 	    }
 	}
     }
