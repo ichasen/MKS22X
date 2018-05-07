@@ -16,7 +16,43 @@ public class Maze{
       YOU MUST COMPLETE THIS METHOD!!!
     */
     public Location[] getNeighbors(Location L){
-	return null;
+        Location[] ans = new Location[4];
+	if (L.getx() == 0){
+	    if (L.gety() == 0){
+		Location l = new Location(1,0,L);
+		Location m = new Location(0,1,L);
+	        ans[0] = l;
+		ans[1] = m;
+	    }
+	    else{
+		Location x = new Location(0,L.gety()+1,L);
+		Location y = new Location(0,L.gety()-1,L);
+		Location z = new Location(1,L.gety(),L);
+		ans[0] = x;
+		ans[1] = y;
+		ans[2] = z;
+		
+	    }
+	}
+	else if (L.gety() == 0){
+	    Location x = new Location(L.getx()+1,0,L);
+	    Location y = new Location(L.getx()-1,0,L);
+	    Location z = new Location(L.getx(),1,L);
+	    ans[0] = x;
+	    ans[1] = y;
+	    ans[2] = z;
+	}
+	else{
+	    Location w = new Location(L.getx(),L.gety()-1,L);
+	    Location x = new Location(L.getx()+1,L.gety(),L);
+	    Location y = new Location(L.getx()-1,L.gety(),L);
+	    Location z = new Location(L.getx(),L.gety()+1,L);
+	    ans[0] = w;
+	    ans[1] = x;
+	    ans[2] = y;
+	    ans[3] = z;
+	}
+	return ans;	    
     }
 
     public Location getStart(){
