@@ -1,11 +1,12 @@
-public class Location{
-    private int x,y;
+public class Location implements Comparable<Location>{
+    private int x,y,distance;
     private Location previous;
 
-    public Location(int _x, int _y, Location prev){
+    public Location(int _x, int _y, Location prev,int distanceFromEnd){
 	x = _x;
 	y = _y;
 	previous = prev;
+	distance = distanceFromEnd;
     }
     public int getx(){
 	return x;
@@ -13,7 +14,24 @@ public class Location{
     public int gety(){
 	return y;
     }
+    public int getDistance(){
+	return distance;
+    }
     public Location getPrev(){
 	return previous;
+    }
+    public int compareTo(Location other){
+	if (other == null){
+	    throw new NullPointerException();
+	}
+	if (other.getDistance() > this.getDistance()){
+	    return -1;
+	}
+	if (other.getDistance() == this.getDistance()){
+	    return 0;
+	}
+	else{
+	    return 1;
+	}
     }
 }
