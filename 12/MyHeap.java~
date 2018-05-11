@@ -1,0 +1,3 @@
+public class MyHeap<String extends Comparable<String>>{
+    String[] heap;
+}
