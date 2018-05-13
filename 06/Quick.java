@@ -9,7 +9,8 @@ public class Quick{
 	int pivot = data[pivotDigit];
 	int i = start;
 	int small = start;
-	int large = end-1;
+	int large = end;
+	swap(data,pivotDigit,small);
 	while(i <= large){
 	    if (data[i] == pivot){
 		i++;
@@ -23,6 +24,7 @@ public class Quick{
 		i++;
 	    }
 	}
+	swap(data,small,large);
 	int[] ans = new int[2];
 	ans[0] = small;
 	ans[1] = large;
@@ -58,88 +60,39 @@ public class Quick{
     }
 
     public static void quickH(int[] data,int start,int end){
-	if(end - start + 1 <= 1){
-	    return;
+	if(end - start <= 5){
+	    insertionSort(data);
 	}
 	else{
-	    int[] partitioned = partition(data,start,end);
-	    int pivot = partitioned[1];
-	    quickH(data,start,pivot);
-	    quickH(data,pivot+1,end);
-	}
-    }
-    private static final int INCREASE = 0;
-    private static final int DECREASE = 1;
-    private static final int STANDARD = 2;
-    private static final int SMALL_RANGE = 3;
-    private static final int EMPTY = 4;
-
-    private static String name(int i){
-	if(i==0)return "Increassing";
-	if(i==1)return "Decreassing";
-	if(i==2)return "Normal Random";
-	if(i==3)return "Random with Few Values";
-	if(i==4)return "size 0 array";
-	return "Error stat array";
-
-    }
-
-    private static int create(int min, int max){
-	return min + (int)(Math.random()*(max-min));
-    }
-
-    private static int[]makeArray(int size,int type){
-	int[]ans =new int[size];
-	if(type == STANDARD){
-	    for(int i = 0; i < size; i++){
-		ans[i]= create(-1000000,1000000);
+	    if (start <= end){
+		int[] partitioned = partition(data,start,end);
+		quickH(data,start,partitioned[0]-1);
+		quickH(data,partitioned[1]+1,end);
 	    }
 	}
-	if(type == INCREASE){
-	    int current = -5 * size;
-	    for(int i = 0; i < size; i++){
-		ans[i]= create(current,current + 10);
-		current += 10;
-	    }
-	}
-	if(type == DECREASE){
-	    int current = 5 * size;
-	    for(int i = 0; i < size; i++){
-		ans[i]= create(current,current + 10);
-		current -= 10;
-	    }
-	}
-	if(type == SMALL_RANGE){
-	    for(int i = 0; i < size; i++){
-		ans[i]= create(-5,5);
-	    }
-	}
-	if(type == EMPTY){
-	    ans = new int[0];
-	}
-	return ans;
     }
-
+    public static void insertionSort(int[] data){
+	for (int i = 1; i < data.length; i++){
+	    int key = data[i];
+	    int j = i-1;
+	    while (j >= 0 && data[j] > key){
+		data[j+1] = data[j];
+		j = j-1;
+	    }
+	    data[j+1] = key;
+	}
+    }
     public static void main(String[]args){
-	if(args.length < 2)return;
-    
-	int size =  Integer.parseInt(args[0]);
-	int type =   Integer.parseInt(args[1]);
-
-	int [] start = makeArray(size,type);
-	int [] result = Arrays.copyOf(start,start.length);
-	Arrays.sort(result);
-    
-	long startTime = System.currentTimeMillis();
-	/*
-	 * Test your sort here!
-	 */
-	Quick.quicksort(start);
-	long elapsedTime = System.currentTimeMillis() - startTime;
-	if(Arrays.equals(start,result)){
-	    System.out.println("PASS Case "+name(type)+" array, size:"+size+" "+elapsedTime/1000.0+"sec ");
-	}else{
-	    System.out.println("FAIL ! ERROR ! "+name(type)+" array, size:"+size+"  ERROR!");
-	}
+	int[] ary = {9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4,-5};
+	System.out.println(Quick.quickselect(ary,5) + " <- Should be 0");
+	int[] ary1 = {9,5,8,7,5,6,5,-3,4,5,3,4,5,1,2,3,4,4,3,5,4,3};
+	System.out.println(Quick.quickselect(ary1,19) + " <- Should be 7");
+	System.out.println(Quick.quickselect(ary1,13) + " <- Should be 5");
+	System.out.println(Quick.quickselect(ary1,0) + " <- Should be -3");
+	System.out.println(Quick.quickselect(ary1,ary1.length-1) + " <- Should be 9");
+	int[] ary2 = {3,6,1,2,4,6,8,99,1,2,32,45,123,-23,12,-30,-12,-3};
+	Quick.quicksort(ary2);
+	System.out.println("Your sorted array" + "\n" + Arrays.toString(ary2));
+	System.out.println("The correct array\n[-30, -23, -12, -3, 1, 1, 2, 2, 3, 4, 6, 6, 8, 12, 32, 45, 99, 123]");
     }
 }
