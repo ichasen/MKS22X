@@ -49,39 +49,42 @@ public class Maze{
 	System.out.println("\033[2J\033[1;1H");
     }
     public int solve(){
-	return solveH (0,0);
+        int row = 0;
+	int col = 0;
+	for (int i = 0;i<maze.length;i++){
+	    for (int j = 0;j<maze[i].length;j++){
+		if (maze[i][j] == 'S'){
+		    row = i;
+		    col = j;
+		}
+	    }
+	}
+	return solveH(row,col);
     }
     private int solveH(int row, int col){
+	int ans = 0;
+	int[][] possibleMoves  = new int[][] {{0,1},{0,-1},{1,0},{-1,0}};
         if(animate){
 	    clearTerminal();
             System.out.println(this);
 	    wait(20);
         }
-	int ans = 0;
-	char r = maze[row][col+1];
-	char l = maze[row][col - 1];
-	char u = maze[row - 1][col];
-	char d = maze[row + 1][col];
-	if (r == 'E' || l == 'E' || u == 'E' || d == 'E') {
+	if (maze[row][col] == 'E'){
+	    ans++;
+	}
+	else{
+	    maze[row][col] = '@';
+	}
+	for (int i = 0;i<possibleMoves.length;i++){
+	    if (solveH(row+possibleMoves[i][0],col+possibleMoves[i][1]) > 0){
+		return solveH(row+possibleMoves[i][0],col+possibleMoves[i][1]);
+	    }
+	}
+	if (ans > 0){
 	    return ans;
+	}else{
+	    return -1;
 	}
-	if (r == ' ') {
-	    ans += 1;
-	    return solveH(row,col+1);
-	}
-	if (d == ' ') {
-	    ans += 1;
-	    return solveH(row+1,col);
-	}
-	if (l == ' ') {
-	    ans += 1;
-	    return solveH(row,col-1);
-	}
-	if (u == ' ') {
-	    ans += 1;
-	    return solveH(row-1,col);
-	}
-        return -1; 
     }
     public static void main(String[]args){
         Maze f;
