@@ -1,9 +1,11 @@
+import java.io.*;
+import java.util.*;
 public class MazeSolver{
     private Maze maze;
     private Frontier frontier;
     private boolean aStar;
     public MazeSolver(String mazeText){
-    
+	maze = new Maze(mazeText);
     }
     //Default to BFS
     public boolean solve(){ return solve(0); }
@@ -19,11 +21,31 @@ public class MazeSolver{
 	//  check if any locations are the end, if you found the end just return true!
 	//  add all the locations to the frontier
 	//when there are no more values in the frontier return false
+	if (mode == 0){
+	    frontier = new FrontierQueue();
+	}
+	if (mode == 1){
+	    frontier = new FrontierStack();
+	}
+	if (mode == 2){
+	    frontier = new FrontierPriorityQueue();
+	}
+	frontier.add(maze.getStart());
 	while(frontier.hasNext()){
-	    if (frontier.next() == maze.getEnd()){
-		return true;
+	    Location next = frontier.next();
+	    Location[] neighbors = maze.getNeighbors(next);
+	    for (int i = 0;i<neighbors.length;i++){
+		if (neighbors[i] != null){
+		    frontier.add(neighbors[i]);
+		    if (neighbors[i].getX() == maze.getEnd().getX() && neighbors[i].getY() == maze.getEnd().getY()){
+		        if (next.getPrev() != null){
+			    maze[next.getX()][next.getY] = '@';
+			}
+			return true;
+		    }
+		}
 	    }
-	}		    
+	}
 	return false;
     }
 
