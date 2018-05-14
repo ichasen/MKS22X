@@ -5,10 +5,6 @@ public class MazeSolver{
     public MazeSolver(String mazeText){
     
     }
-    public void setAStar(boolean a){
-	aStar = a;
-    }
-
     //Default to BFS
     public boolean solve(){ return solve(0); }
 
