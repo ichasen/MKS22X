@@ -1,9 +1,12 @@
 public class MazeSolver{
     private Maze maze;
     private Frontier frontier;
-
+    private boolean aStar;
     public MazeSolver(String mazeText){
     
+    }
+    public void setAStar(boolean a){
+	aStar = a;
     }
 
     //Default to BFS
