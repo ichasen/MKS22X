@@ -1,4 +1,4 @@
-public class RunningMedians{
+public class RunningMedian{
     MyHeap maxHeap = new MyHeap<Double>();
     MyHeap minHeap = new MyHeap<Double>();
     public void add(Double element){
@@ -8,13 +8,13 @@ public class RunningMedians{
 	else if (element.compareTo(maxHeap.peek()) > 0){
 	    minHeap.add(element);
 	    if (minHeap.size() - maxHeap.size() > 1){
-		resize(maxHeap,minHeap);
+		@SuppressWarnings("unchecked") resize(maxHeap,minHeap);
 	    }
 	}
 	else{
 	    minHeap.add(element);
 	    if (maxHeap.size() - minHeap.size() > 1){
-		resize(minHeap,maxHeap);
+		@SuppressWarnings("unchecked") resize(minHeap,maxHeap);
 	    }
 	}
     }
