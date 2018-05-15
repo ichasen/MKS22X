@@ -32,14 +32,19 @@ public class MazeSolver{
 	}
 	frontier.add(maze.getStart());
 	while(frontier.hasNext()){
-	    Location next = frontier.next();
-	    Location[] neighbors = maze.getNeighbors(next);
+	    Location current = frontier.next();
+	    Location[] neighbors = maze.getNeighbors(current);
 	    for (int i = 0;i<neighbors.length;i++){
 		if (neighbors[i] != null){
 		    frontier.add(neighbors[i]);
 		    if (neighbors[i].getX() == maze.getEnd().getX() && neighbors[i].getY() == maze.getEnd().getY()){
-		        if (next.getPrev() != null){
-			    maze[next.getX()][next.getY] = '@';
+		        if (current.getPrev() != null){
+			    maze[current.getX()][current.getY()] = '@';
+			}
+			if (aStar){
+			    for (Location l = current;l != start;l = l.getPrev()){
+				l.distance++;
+			    }
 			}
 			return true;
 		    }

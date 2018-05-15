@@ -1,0 +1,12 @@
+public class FrontierStack implements Frontier{
+    Stack frontier = new Stack();
+    public Location next(){
+	return frontier.peek();
+    }
+    public void add(Location n){
+	frontier.push(n);
+    }
+    public void hasNext(){
+	return frontier.empty();
+    }
+}
