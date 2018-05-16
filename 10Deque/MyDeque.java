@@ -72,14 +72,20 @@ public class MyDeque<E>{
 	}
 	E ans  = data[firstIndex];
 	data[firstIndex] = null;
-	firstIndex = (firstIndex + data.length + 1) % data.length;
+	if (firstIndex == data.length - 1){
+	    firstIndex = 0;
+	    size--;
+	    return ans;
+	}
 	size--;
+	firstIndex = firstIndex + 1;
 	return ans;
     }
     public E removeLast(){
 	if (size == 0){
 	    throw new NoSuchElementException();
 	}
+	resize();
 	E ans = data[lastIndex];
 	if (lastIndex == 0){
 	    data[lastIndex] = null;
@@ -102,24 +108,6 @@ public class MyDeque<E>{
 	    throw new NoSuchElementException();
 	}
 	return data[lastIndex];
-    }
-    public String toString(){
-	String ans = "[";
-	if(firstIndex < lastIndex){
-	    for (int i = firstIndex; i <= lastIndex; i++){
-		ans += data[i] + " , ";
-	    }
-	}
-	else{
-	    for(int i = firstIndex; i < data.length; i++){
-		ans += data[i] + ", ";
-	    }
-	    for(int i = 0; i <= lastIndex; i++){
-		ans += data[i] + ", ";
-	    }
-	}
-	ans = ans.substring(0, ans.length() - 2) + "]";
-	return ans;
     }
 }
 	
