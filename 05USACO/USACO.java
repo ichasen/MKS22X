@@ -11,15 +11,16 @@ public class USACO{
 	int height = Integer.parseInt(s.next());
 	int amount  = Integer.parseInt(s.next());
 	int[][] lake = new int[r][c];
+	int rowStomp,colStomp,maxElement;
 	for (int i = 0;i<r;i++){
 	    for (int j = 0;j<c;j++){
 		lake[i][j] = Integer.parseInt(s.next());
 	    }
 	}
 	while (amount > 0){	    
-	    int rowStomp =  Integer.parseInt(s.next()) - 1;
-	    int colStomp =  Integer.parseInt(s.next()) - 1;
-	    int maxElement = lake[rowStomp][colStomp];
+	    rowStomp =  Integer.parseInt(s.next()) - 1;
+	    colStomp =  Integer.parseInt(s.next()) - 1;
+	    maxElement = lake[rowStomp][colStomp];
 	    for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (lake[rowStomp+i][colStomp+j] > maxElement) {
@@ -27,7 +28,7 @@ public class USACO{
                     }
                 }
             }
-            int newElement = maxElement - Integer.parseInt(s.next());
+            int newElement = maxElement - Integer.parseInt(s.next())-1;
             for (int x = 0; x < 3; x++) {
                 for (int y = 0; y < 3; y++) {
                     if (lake[rowStomp+x][colStomp+y] > newElement) {
