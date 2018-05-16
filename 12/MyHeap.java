@@ -1,4 +1,4 @@
-import java.io.*
+import java.io.*;
 public class MyHeap<T extends Comparable<T>>{
     T[] heap;
     boolean isMax;
