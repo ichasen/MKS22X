@@ -1,16 +1,21 @@
+import java.io.*;
+import java.util.*;
 public class MyHeap<T extends Comparable<T>>{
-    double[] heap;
+    T[] heap;
     boolean isMax;
+    int size;
     @SuppressWarnings("unchecked")
     public MyHeap(){
-	heap = new double[0];
+	heap = (T[]) new Comparable[10];
+	size = 0;
     }
     @SuppressWarnings("unchecked")
     public MyHeap(boolean isMaxHeap){
-	heap = new double [0];
+	heap = (T[]) new Comparable[10];
 	isMax = isMaxHeap;
+	size = 0;
     }
-    public int indexOf(double element){
+    public int indexOf(T element){
 	for (int i = 0;i<heap.length;i++){
 	    if (heap[i] == element){
 		return i;
@@ -18,58 +23,64 @@ public class MyHeap<T extends Comparable<T>>{
 	}
 	return -1;
     }
-    private void pushDown(double parent,double child1,double child2,boolean isMaxHeap){
+    private void pushDown(int parent){
+	int child1 = parent*2 + 1;
+	int child2 = parent*2 + 2;
 	if (isMax){
-	    if (child1 >= child2){
-	        double temp = parent;
-		heap[indexOf(parent)] = child1;
-		heap[indexOf(child1)] = temp;
+	    if (heap[child1].compareTo(heap[parent]) >= 0 && child1 < size && child2 < size){
+	        swap(parent,child1);
+		pushDown(child1);
 	    }
-	    else{
-		double temp = parent;
-		heap[indexOf(parent)] = child2;
-		heap[indexOf(child2)] = temp;
+	    else if (child1 < size && child2 < size){
+		swap(parent,child2);
+		pushDown(child2);
 	    }
 	}
 	else{
-	    if (child1 <= child2){
-		double temp = parent;
-		heap[indexOf(parent)] = child1;
-		heap[indexOf(child1)] = temp;
+	    if (child1 < size && child2 < size){
+		if (heap[child1].compareTo(heap[parent]) <= 0){
+		    swap(parent,child1);
+		    pushDown(child1);
+		}
 	    }
-	    else{
-	        double temp = parent;
-		heap[indexOf(parent)] = child2;
-		heap[indexOf(child2)] = temp;
+	    else if (child1 < size && child2 < size){
+	        swap(parent,child2);
+		pushDown(child2);
 	    }
 	}
     }
-    public double peek(){
+    public void swap(int i,int j){
+	T temp = heap[i];
+	heap[i] = heap[j];
+	heap[j] = temp;
+    }
+    public T peek(){
 	return heap[0];
     }
     public int size(){
-	return heap.length;
+	return size;
     }
-    public void add(double element){
-	@SuppressWarnings("unchecked") double[] heap2 = new double[heap.length + 1];
-	for (int i = 0;i<heap.length;i++){
-	    heap2[i] = heap[i];
-	}
-	heap2[heap2.length - 1] = element;
-	if (isMax){
-	    if (heap2[(heap2.length - 2)/2] < element){
-		pushDown(heap2[(heap2.length - 2)/2],element,heap2[heap2.length - 2],true);
+    public void add(T element){
+	if (size == heap.length){
+	    @SuppressWarnings("unchecked") T[] heap2 = (T[]) new Comparable[heap.length + 1];
+	    for (int i = 0;i<heap.length;i++){
+		heap2[i] = heap[i];
 	    }
+	    heap = heap2;
+	}
+	size++;
+	heap[size-1] = element;
+	pushDown(0);
+    }
+    public T remove(){
+	T ans;
+	if (heap.length > 1){
+	    ans = heap[heap.length-1];
 	}
 	else{
-	    if (heap2[(heap2.length - 2)/2] > element){
-		pushDown(heap2[(heap2.length - 2)/2],element,heap2[heap2.length - 2],false);
-	    }
+	    ans = heap[0];
 	}
-    }
-    public double remove(){
-	double ans = heap[heap.length - 1];
-	@SuppressWarnings("unchecked") double[] heap2 = new double[heap.length - 1];
+	@SuppressWarnings("unchecked") T[] heap2 = (T[]) new Comparable[heap.length - 1];
 	for (int i = 0;i<heap2.length;i++){
 	    heap2[i] = heap[i];
 	}
