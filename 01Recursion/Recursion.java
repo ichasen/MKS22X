@@ -1,3 +1,4 @@
+import java.lang.Math;
 public class Recursion{
     public int fact(int n){
 	return factHelp (n,1);
@@ -12,18 +13,13 @@ public class Recursion{
 	return factHelp (n - 1,ans * n);
     }
     public int fib (int n){
-	return fibHelp (n,0,1,0);
+        return fibHelp(n,0,1);
     }
-    public int fibHelp (int n,int current,int next, int ans){
+    public int fibHelp (int n,int current,int next){
 	if (n == 0){
-	    return 1;
+	    return current;
 	}
-	for (int i = 0;i<n;i++){
-	    ans = current + next;
-	    current = next;
-	    next = ans;
-	}
-	return ans;
+	return fibHelp(n-1,next,current+next);
     }
     public double sqrt(double n){
 	if (n<0){
