@@ -1,4 +1,5 @@
-import java.util.LinkedList;
+import java.util.*;
+import java.io.*;
 public class StackClass{
     private LinkedList<Double> data;
     public StackClass(){
@@ -15,7 +16,7 @@ public class StackClass{
 	return ans;
     }
     public Double pop(){
-	return data.remove(data.size() - 1);
+	return data.removeLast();
     }
     public void push(Double item){
 	data.add(item);
