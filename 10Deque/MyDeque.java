@@ -167,7 +167,6 @@ public class MyDeque<E>{
 	System.out.println(a.getFirst());
 	System.out.println(a.getLast());
 	
-    }
-	
+    }	
 }
 	
