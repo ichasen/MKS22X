@@ -41,19 +41,26 @@ public class MyDeque<E>{
 	if (size() == data.length || lastIndex == firstIndex - 1){
 	    resize();
 	}
-	if (firstIndex == 0){
-	    if (data[firstIndex] == null){
-		data[firstIndex] = element;
-		firstIndex = data.length-1;
-	    }
-	    else{
-		firstIndex = data.length-1;
-		data[firstIndex] = element;
-	    }
+	if (size() == 0){
+	    firstIndex = 0;
+	    lastIndex = 0;
+	    data[0] = element;
 	}
 	else{
-	    firstIndex--;
-	    data[firstIndex] = element;
+	    if (firstIndex == 0){
+		if (data[firstIndex] == null){
+		    data[firstIndex] = element;
+		    firstIndex = data.length-1;
+		}
+		else{
+		    firstIndex = data.length-1;
+		    data[firstIndex] = element;
+		}
+	    }
+	    else{
+		firstIndex--;
+		data[firstIndex] = element;
+	    }
 	}
 	size++;
     }
@@ -117,8 +124,13 @@ public class MyDeque<E>{
 	    }
 	}
 	else if (firstIndex == lastIndex){
-	    ans += "]";
-	    return ans;
+	    if (data[firstIndex] != null){
+		ans += data[firstIndex] + "," + "]";
+	    }
+	    else{
+		ans += "]";
+		return ans;
+	    }
 	}
 	else{
 	    for (int i = firstIndex;i<data.length;i++){
@@ -128,12 +140,12 @@ public class MyDeque<E>{
 		ans += data[j] + ", ";
 	    }
 	}
-	ans = ans.substring(0,ans.length()-1) + "]";
+	ans = ans.substring(0,ans.length()-2) + "]";
 	return ans;
     }
 	    
     public static void main (String[] args){
-	MyDeque<Integer> a = new MyDeque<>();
+	MyDeque<Integer> a = new MyDeque<>(5);
 	System.out.println(a);
 	a.addFirst(1);
 	System.out.println(a);
@@ -152,6 +164,8 @@ public class MyDeque<E>{
 	System.out.println(a);
 	a.addFirst(10);
 	System.out.println(a);
+	System.out.println(a.getFirst());
+	System.out.println(a.getLast());
 	
     }
 	
