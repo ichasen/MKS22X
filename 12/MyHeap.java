@@ -69,18 +69,10 @@ public class MyHeap<T extends Comparable<T>>{
 	pushUp(size-1);
     }
     public T remove(){
-	T ans;
-	if (heap.length > 1){
-	    ans = heap[heap.length-1];
-	}
-	else{
-	    ans = heap[0];
-	}
-	@SuppressWarnings("unchecked") T[] heap2 = (T[]) new Comparable[heap.length - 1];
-	for (int i = 0;i<heap.length-1;i++){
-	    heap2[i] = heap[i];
-	}
-	return ans;
+	heap[size-1] = null;
+	size--;
+	pushUp(size-1);
+	return heap[size];
     }
     public String toString(){
 	String ans = "[";
@@ -93,8 +85,9 @@ public class MyHeap<T extends Comparable<T>>{
 	return ans;
     }
     public static void main(String[] args){
-	MyHeap<Integer> ex = new MyHeap<>(false);
+	MyHeap<Integer> ex = new MyHeap<>(true);
 	ex.add(2);
+	System.out.println(ex.toString());
 	ex.add(3);
 	System.out.println(ex.toString());
 	ex.add(5);
