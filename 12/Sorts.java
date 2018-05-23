@@ -28,13 +28,28 @@ public class Sorts<T extends Comparable<T>>{
 	heapify(data);
 	for (int i = data.length - 1;i>=0;i--){
 	    swap(data,data[0],data[i]);
-	    for (int j = 0;j<data.length - 2;j++){
-		if (j * 2 + 1 < data.length-1 && data[j].compareTo( data[j*2+1]) <= 0){
-		    swap(data,data[j],data[j*2+1]);
+	    pushUp(i,data,true);
+	}
+    }
+    public void pushUp(int x,T[] heap,boolean isMax){
+	int parent = (x-1)/2;
+	if (isMax){
+	    if (parent>=0){
+		if (heap[x].compareTo(heap[parent]) > 0){
+		    swap(heap,heap[x],heap[parent]);
+		    pushUp(parent,heap,true);
 		}
-		if (j * 2 + 2 < data.length-1 && data[j].compareTo( data[j*2+2]) <= 0){
-		    swap(data,data[j],data[j*2+2]);
+
+	    }
+	    
+	}
+	else{
+	    if (parent>=0){
+		if (heap[x].compareTo(heap[parent]) < 0){
+		    swap(heap,heap[x],heap[parent]);
+		    pushUp(parent,heap,true);
 		}
+
 	    }
 	}
     }
