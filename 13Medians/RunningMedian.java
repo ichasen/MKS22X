@@ -1,38 +1,36 @@
 public class RunningMedian{
     MyHeap maxHeap = new MyHeap<Double>();
-    MyHeap minHeap = new MyHeap<Double>();
+    MyHeap minHeap = new MyHeap<Double>(false);
     public void add(Double element){
 	if (maxHeap.size() == 0 && minHeap.size() == 0){
 	    maxHeap.add(element);
 	}
-	else if (element.compareTo(maxHeap.peek()) > 0){
-	    minHeap.add(element);
-	    if (minHeap.size() - maxHeap.size() > 1){
-		@SuppressWarnings("unchecked") resize(maxHeap,minHeap);
-	    }
-	}
 	else{
-	    minHeap.add(element);
-	    if (maxHeap.size() - minHeap.size() > 1){
-		@SuppressWarnings("unchecked") resize(minHeap,maxHeap);
+	    if (element.compareTo(minHeap.peek()) < 0){
+		minHeap.add(element);
+		if (maxHeap.size() - minHeap.size() >= 2){
+		    maxHeap.add(minHeap.remove());
+		}
+	    }
+	    else{
+		maxHeap.add(element);
+		if (maxHeap.size() - minHeap.size() >= 2){
+		    minHeap.add(maxHeap.remove());
+		}
 	    }
 	}
-    }
-    public void resize(MyHeap<Double> heap1, MyHeap<Double> heap2){
-        heap1.add(heap2.remove());
     }
     public Double getMedian(){
-	if (maxHeap.size() - minHeap.size() == 1){
-	    return maxHeap.peek();
+	Double ans = 0.0;
+	int current = 0;
+	if (minHeap.size() >= maxHeap.size()){
+	    ans += minHeap.peek();
+	    current++;
 	}
-	else if(minHeap.size() - maxHeap.size() == 1){
-	    return minHeap.peek();
+	if (maxHeap.size() > minHeap.size()){
+	    ans += maxHeap.peek;
+	    current++;
 	}
-	else{
-	    return (minHeap.peek() + maxHeap.peek()) / 2;
-	}
-    }
-    public int size(){
-	return minHeap.size() + maxHeap.size();
+	return ans/current;
     }
 }
