@@ -1,3 +1,5 @@
+import java.util.*;
+import java.io.*;
 public class RunningMedian{
     MyHeap maxHeap = new MyHeap<Double>();
     MyHeap minHeap = new MyHeap<Double>(false);
@@ -24,11 +26,11 @@ public class RunningMedian{
 	Double ans = 0.0;
 	int current = 0;
 	if (minHeap.size() >= maxHeap.size()){
-	    ans += minHeap.peek();
+	    ans += minHeap[0];
 	    current++;
 	}
 	if (maxHeap.size() > minHeap.size()){
-	    ans += maxHeap.peek;
+	    ans += maxHeap[0];
 	    current++;
 	}
 	return ans/current;
