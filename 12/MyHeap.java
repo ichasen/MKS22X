@@ -23,29 +23,25 @@ public class MyHeap<T extends Comparable<T>>{
 	}
 	return -1;
     }
-    private void pushDown(int parent){
-	int child1 = parent*2 + 1;
-	int child2 = parent*2 + 2;
+    public void pushUp(int x){
+	int parent = (x-1)/2;
 	if (isMax){
-	    if (heap[child1].compareTo(heap[parent]) >= 0 && child1 < size && child2 < size){
-	        swap(parent,child1);
-		pushDown(child1);
+	    if (parent>=0){
+		if (heap[x].compareTo(heap[parent]) > 0){
+		    swap(x,parent);
+		    pushUp(parent);
+		}
+
 	    }
-	    else if (child1 < size && child2 < size){
-		swap(parent,child2);
-		pushDown(child2);
-	    }
+	    
 	}
 	else{
-	    if (child1 < size && child2 < size){
-		if (heap[child1].compareTo(heap[parent]) <= 0){
-		    swap(parent,child1);
-		    pushDown(child1);
+	    if (parent>=0){
+		if (heap[x].compareTo(heap[parent]) < 0){
+		    swap(x,parent);
+		    pushUp(parent);
 		}
-	    }
-	    else if (child1 < size && child2 < size){
-	        swap(parent,child2);
-		pushDown(child2);
+
 	    }
 	}
     }
@@ -70,7 +66,7 @@ public class MyHeap<T extends Comparable<T>>{
 	}
 	size++;
 	heap[size-1] = element;
-	pushDown(0);
+	pushUp(size-1);
     }
     public T remove(){
 	T ans;
@@ -81,9 +77,34 @@ public class MyHeap<T extends Comparable<T>>{
 	    ans = heap[0];
 	}
 	@SuppressWarnings("unchecked") T[] heap2 = (T[]) new Comparable[heap.length - 1];
-	for (int i = 0;i<heap2.length;i++){
+	for (int i = 0;i<heap.length-1;i++){
 	    heap2[i] = heap[i];
 	}
 	return ans;
+    }
+    public String toString(){
+	String ans = "[";
+	for (int i = 0;i<heap.length;i++){
+	    if (heap[i] != null){
+		ans += heap[i] + ", ";
+	    }
+	}
+	ans = ans.substring(0,ans.length()-2) + "]";
+	return ans;
+    }
+    public static void main(String[] args){
+	MyHeap<Integer> ex = new MyHeap<>(false);
+	ex.add(2);
+	ex.add(3);
+	System.out.println(ex.toString());
+	ex.add(5);
+	System.out.println(ex.toString());
+	ex.add(4);
+	System.out.println(ex.toString());
+	ex.add(10);
+	ex.add(1);
+	System.out.println(ex.toString());
+	ex.remove();
+	System.out.println(ex.toString());
     }
 }
