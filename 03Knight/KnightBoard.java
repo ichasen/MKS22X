@@ -8,11 +8,6 @@ public class KnightBoard{
 	    throw new IllegalArgumentException();
 	}
 	board = new int [startingRows][startingCols];
-	for (int i = 0;i<board.length;i++){
-	    for (int j = 0;j<board[0].length;j++){
-		board [i][j] = 0;
-	    }
-	}
     }
     public String toString(){
 	String result = "";
@@ -40,24 +35,22 @@ public class KnightBoard{
 	}
 	return solveH(startingRow,startingCol,1);
     }
-    public boolean solveH(int row,int col,int level){
-	if (level == (board.length * board[0].length)){
-	    if (board[row][col] == 0){
-		board[row][col] = level;
-	    }
+    private boolean solveH(int row ,int col, int level){
+	board[row][col]=level;
+	if (level == board.length*board[0].length){
 	    return true;
 	}
-	for (int i = 0;i<possibleMoves[0].length;i++){
-	    int x = row + possibleMoves[i][0];
-            int y = col + possibleMoves[i][1];
-	    if (x >= 0 && x < board.length && y >= 0 && y < board.length){
-		board[row][col] = level;
-		if (solveH(x,y,level+1)){
-		    return true;
+	for(int i=0;i<8;i++){
+	    int[] movement = possibleMoves[i];
+	    if (row+possibleMoves[i][0]<board.length && col+possibleMoves[i][1]<board[0].length&&row+possibleMoves[i][0]>-1 && col+possibleMoves[i][1]>-1){
+		if (board[row+movement[0]][col+movement[1]]==0){
+		    if (solveH(row+movement[0], col+movement[1], level+1)){
+			return true;
+		    }				
 		}
-		board[row][col] = 0;
 	    }
-        }
+	}
+	board[row][col]=0;
 	return false;
     }
     public int countSolutions(int startingRow,int startingCol){
@@ -75,23 +68,26 @@ public class KnightBoard{
     }
     public int countH(int row,int col,int level){
 	int ans = 0;
-	if (level == board.length * board[0].length){
-	    return 1;
-	}
-	for (int[] move:possibleMoves){
-	    int x = row+move[0];
-	    int y = row+move[1];
-	    try{
-	    if (board[x][y] == 0){
-		board[x][y] = level;
-		ans += countH(x,y,level+1);
-		board[row][col] = 0;
+    	if (row<0 || col<0 || row>=board.length || col>=board[0].length){
+    		return 0;
+    	}
+    	if (board[row][col] != 0){
+    		return 0;
+    	}
+    	if (level == board.length * board[0].length) {
+    		return 1;
+    	}
+    	for (int i = 0; i < possibleMoves.length;i++){
+	    int moveX = row + possibleMoves[i][0];
+	    int moveY = col + possibleMoves[i][1];
+	    if (moveX < 0 || moveY < 0 || moveX >= board.length || moveY >= board[0].length){
+	    }else{
+    		board[row][col] = level;
+    		ans += countH(moveX,moveY,level+1);
+    		board[row][col] = 0;
 	    }
-	    }
-	    catch(IndexOutOfBoundsException e){
-	    }
-	}
-	return ans;
+    	}
+    	return ans;
     }
     public static void main(String[] args){
 	KnightBoard a = new KnightBoard(3,3);
