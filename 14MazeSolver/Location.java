@@ -24,7 +24,7 @@ public class Location implements Comparable<Location>{
     public Location getPrev(){
 	return previous;
     }
-    public int setDSoFar(int n){
+    public void setDSoFar(int n){
 	distanceSoFar = n;
     }
     public int compareTo(Location other){
