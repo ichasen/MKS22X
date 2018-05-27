@@ -2,118 +2,113 @@ import java.util.ArrayList;
 import java.util.*;
 import java.io.*;
 public class USACO{
-    public static int bronze(String filename){
-	try{
+    public static int bronze(String filename) throws FileNotFoundException{
 	File f = new File(filename);
 	Scanner s = new Scanner(f);
-	int r = Integer.parseInt(s.next());
-	int c = Integer.parseInt(s.next());
-	int height = Integer.parseInt(s.next());
-	int amount  = Integer.parseInt(s.next());
+       	String word = s.nextLine();
+	String[] text = word.split(" ");
+	int r = Integer.parseInt(text[0]);
+	int c = Integer.parseInt(text[1]);
+	int height = Integer.parseInt(text[2]);
+	int amount = Integer.parseInt(text[3]);
+	int x = 0;
+	int y = 0;
 	int[][] lake = new int[r][c];
-	int rowStomp,colStomp,maxElement;
-	for (int i = 0;i<r;i++){
-	    for (int j = 0;j<c;j++){
-		lake[i][j] = Integer.parseInt(s.next());
+	for(int i = 0;i < r;i++){
+	    String element = s.nextLine();
+	    String[] elements = element.split(" ");
+	    for(int j = 0; j < c; j++){
+		lake[i][j] = Integer.parseInt(elements[j]);
 	    }
 	}
-	while (amount > 0){	    
-	    rowStomp =  Integer.parseInt(s.next()) - 1;
-	    colStomp =  Integer.parseInt(s.next()) - 1;
-	    maxElement = lake[rowStomp][colStomp];
-	    for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (lake[rowStomp+i][colStomp+j] > maxElement) {
-                        maxElement = lake[rowStomp+i][colStomp+j];
-                    }
-                }
-            }
-            int newElement = maxElement - Integer.parseInt(s.next())-1;
-            for (int x = 0; x < 3; x++) {
-                for (int y = 0; y < 3; y++) {
-                    if (lake[rowStomp+x][colStomp+y] > newElement) {
-                        lake[rowStomp][colStomp+y] = newElement;
-                    }
-                }
-            }
-            amount--;
+	for(int i = amount;i > 0;i--){
+	    String instruction = s.nextLine();
+	    String[] instructions = instruction.split(" ");
+	    int r_ = Integer.parseInt(instructions[0]) - 1;
+	    int c_ = Integer.parseInt(instructions[1]) - 1;
+	    int quantity = Integer.parseInt(instructions[2]);
+	    int max = 0;
+	    for(int a = r_; a < r_ + 3;a++){
+		for(int b = c_ ;b < c_ + 3;b++){
+		    if(lake[a][b] > max){
+			max = lake[a][b];		    
+		    }
+		}
+	    }
+	    for(int in = r_;in < r_ + 3; in++){
+		for(int j = c_; j < c_ + 3;j++){
+		    if(lake[in][j] == max){
+			x = max - quantity;
+			lake[in][j] = x;
+		    }
+		    if(lake[in][j] + quantity > max){			
+			y = max - quantity;
+			lake[in][j] = y;
+		    }
+		}
+	    }
 	}
 	int depth = 0;
-	for (int row = 0;row<r;row++){
-	    for (int col = 0;col<c;col++){
-		if (height > lake[row][col]){
-		    lake[row][col] = height - lake[row][col];
-		    depth = depth + lake[row][col];
-		}
+	for(int i = 0; i < lake.length; i++){
+	    for(int j = 0; j < lake[i].length; j++){		
+		int current = height - lake[i][j];
+		if(current > 0){
+		    depth += current;
+		}		
 	    }
 	}
 	return depth * 72 * 72;
-	}
-	catch (FileNotFoundException f){
-	    System.exit(0);
-	}
-	return -1;
     }
-    public static int silver(String filename){
-	try{	
-	    File f = new File(filename);
-	    Scanner s = new Scanner(f);
-	    int r = Integer.parseInt(s.next());
-	    int c = Integer.parseInt(s.next());
-	    int t = Integer.parseInt(s.next());
-	    char[][] map = new char[r][c];
-	    int current = 0;
+    public static int silver(String filename) throws FileNotFoundException{	
+	File f = new File(filename);
+	Scanner s = new Scanner(f);	
+	int r = s.nextInt();
+	int c = s.nextInt();
+	int t = s.nextInt();		
+	s.nextLine();		
+	char[][] map = new char[r][c];	
+	for (int x = 0; x < r; x++) {
 	    String row = s.nextLine();
-	    for (int i = 0;i<r;i++){
-		row = s.nextLine();
-		for (int j = 0;j<c;j++){
-		    map[i][j] = row.charAt(j);
-		}
+	    for (int y = 0; y < c; y++){
+		map[x][y] = row.charAt(y);
 	    }
-	    String[] mapArray = row.split(" ");
-	    int row1 = Integer.parseInt(mapArray[0])-1;
-	    int col1 = Integer.parseInt(mapArray[1])-1;
-	    int row2 = Integer.parseInt(mapArray[2])-1;
-	    int col2 = Integer.parseInt(mapArray[3])-1;
-	    int[][] mapUnused = new int [r][c];
-	    int[][] mapUsed = new int[r][c];
-	    for (int x = 0;x<r;x++){
-		for (int y = 0;y<c;y++){
-		    mapUnused[r][c] = -1;
-		}
-	    }
-	    mapUnused[row1][col1] = 1;
-	    while (t>0){
-		for (int a = 0;a<r;a++){
-		    for (int b = 0;b<c;b++){
-			mapUsed[a][b] = mapUnused[a][b];
-		    }
-		}
-		for (int d = 0; d < r; d++){
-		    for (int e = 0; e < c; e++){
-			if (mapUnused[d][e] != -1){
-			    mapUnused[d][e] = 0;
-			    if (d + 1 < r && mapUnused[d + 1][e] >= 0){
-				mapUnused[d][e] += mapUsed[d + 1][e];
-			    }
-			    if (d - 1 >= 0 && mapUnused[d - 1][e] >= 0){
-				mapUnused[d][e] += mapUsed[d - 1][e];
-			    }
-			    if (e + 1 < c && mapUnused[d][e+1] >= 0){
-				mapUnused[d][e] += mapUsed[d][e + 1];
-			    }
-			    if (e - 1 >= 0 && mapUnused[d][e-1] >= 0){
-				mapUnused[d][e] += mapUsed[d][e-1];
-			    }			    
+	}	
+	int row1 = s.nextInt();
+	int col1 = s.nextInt();
+	int row2 = s.nextInt();
+	int col2 = s.nextInt();	
+	int[][] all = new int[r][c];
+	all[row1 - 1][col1 - 1] = 1;		
+	int current = 0;
+	while (current < t){
+	    int[][] mapUnused = new int[r][c];
+	    for (int x = 0; x < r; x++){
+		for (int y = 0; y < c; y++){
+		    if (map[x][y] != '*'){
+			if ((x+1) < r){
+			    mapUnused[x][y] = mapUnused[x][y] + all[x+1][y];
+			}
+			if ((x-1) >= 0){
+			    mapUnused[x][y] = mapUnused[x][y] + all[x-1][y];
+			}
+			if ((y+1) < c){
+			    mapUnused[x][y] = mapUnused[x][y] + all[x][y+1];
+			}
+			if ((y-1) >= 0){
+			    mapUnused[x][y] = mapUnused[x][y] + all[x][y-1];
 			}
 		    }
 		}
-		t--;
 	    }
-	    return mapUnused[row2][col2];
+	    for (int x = 0; x < r; x++){
+		for (int y = 0; y < c; y++){
+		    all[x][y] = mapUnused[x][y];
+		}
+	    }
+		
+	    current++;
 	}
-	catch(FileNotFoundException e){
-	    return -1;
-	}
+	int ans = all[row2-1][col2-1];
+	return ans;
     }
 }
