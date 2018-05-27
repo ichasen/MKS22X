@@ -2,37 +2,35 @@ import java.util.*;
 import java.io.*;
 public class Maze{
     private char[][]maze;
+    int[][] possibleMoves  = new int[][] {{0,1},{0,-1},{1,0},{-1,0}};
     private boolean animate;//false by default
-    public Maze(String filename) {
-	try{
-	    int length = 0;
-	    File x = new File (filename);
-	    Scanner s = new Scanner (x);
-	    String line2;
-	    while (s.hasNextLine()){
-		line2 = s.nextLine();
-		length++;
-	    }
-	    s = new Scanner (x);
-	    String line = s.nextLine();
-	    int y = line.length();
-	    maze = new char [length][y];
-	    int current = 0;
-	    for (int i = 0;i<y-1;i++){
-		maze[current][i] = line.charAt(i);
-	    }
+    public Maze(String filename) throws FileNotFoundException{
+	animate = false;
+	int x = 0;
+	int y = 0;
+	File f = new File(filename);
+	Scanner s = new Scanner(f);
+	int current = 0;
+	ArrayList<String> text = new ArrayList<>();
+	while (s.hasNextLine()){
 	    current++;
-	    while (s.hasNextLine()){
-		line = s.nextLine();
-		for (int i = 0;i<y-1;i++){
-		    maze[current][i] = line.charAt(i);
+	    text.add(s.nextLine());
+	}
+	Scanner a = new Scanner(f);
+	maze = new char[current][text.get(1).length()];
+	for (int i = 0; i < text.size(); i++){
+	    for (int j = 0; j < text.get(i).length(); j++){
+		maze[i][j] = text.get(i).charAt(j);
+		if (maze[i][j] == 'E'){
+		    x++;
 		}
-	    
-		current++;
+		if (maze[i][j] == 'S'){
+		    y++;
+		}
 	    }
 	}
-	catch(FileNotFoundException f){
-	    System.out.println("File not found");
+	if (x != 1 || y != 1){
+	    throw new IllegalStateException();
 	}
     }
     private void wait(int millis){
@@ -49,42 +47,46 @@ public class Maze{
 	System.out.println("\033[2J\033[1;1H");
     }
     public int solve(){
-        int row = 0;
-	int col = 0;
 	for (int i = 0;i<maze.length;i++){
 	    for (int j = 0;j<maze[i].length;j++){
 		if (maze[i][j] == 'S'){
-		    row = i;
-		    col = j;
+		    maze[i][j] = '@';
+		    return solveH(i,j,0);
 		}
 	    }
 	}
-	return solveH(row,col);
+	return -1;
     }
-    private int solveH(int row, int col){
-	int ans = 0;
-	int[][] possibleMoves  = new int[][] {{0,1},{0,-1},{1,0},{-1,0}};
+    private int solveH(int row, int col,int level){
         if(animate){
 	    clearTerminal();
             System.out.println(this);
 	    wait(20);
         }
 	if (maze[row][col] == 'E'){
-	    ans++;
-	}
-	else{
-	    maze[row][col] = '@';
+	    return level;
 	}
 	for (int i = 0;i<possibleMoves.length;i++){
-	    if (solveH(row+possibleMoves[i][0],col+possibleMoves[i][1]) > 0){
-		return solveH(row+possibleMoves[i][0],col+possibleMoves[i][1]);
+	    maze[row][col] = '@';
+	    if(maze[row + possibleMoves[i][0]][col + possibleMoves[i][1]] == ' ' || maze[row + possibleMoves[i][0]][col + possibleMoves[i][1]] == 'E'){
+		int nextStep = solveH(row + possibleMoves[i][0],col + possibleMoves[i][1],level + 1);
+		if(nextStep != -1){
+		    return nextStep;
+		}
 	    }
+	    maze[row][col] = '.';
 	}
-	if (ans > 0){
-	    return ans;
-	}else{
-	    return -1;
+	return -1;
+    }
+    public String toString(){
+	String ans = "";
+	for (int i = 0;i < maze.length;i++){
+	    for (int j = 0;j < maze[0].length;j++){
+		ans += maze[i][j];
+	    }
+	    ans += "\n";
 	}
+	return ans;
     }
     public static void main(String[]args){
         Maze f;
