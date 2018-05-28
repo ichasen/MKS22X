@@ -76,12 +76,19 @@ public class MyHeap<T extends Comparable<T>>{
     }
     public String toString(){
 	String ans = "[";
+	if (heap.length == 0){
+	    return "[]";
+	}
+	if (heap.length == 1){
+	    ans += heap[0] + "]";
+	    return ans;
+	}
 	for (int i = 0;i<heap.length;i++){
 	    if (heap[i] != null){
 		ans += heap[i] + ", ";
 	    }
 	}
-	ans = ans.substring(0,ans.length()-2) + "]";
+	ans +=  "]";
 	return ans;
     }
     public static void main(String[] args){
