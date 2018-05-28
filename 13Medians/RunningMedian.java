@@ -23,7 +23,7 @@ public class RunningMedian{
 	}
     }
     public Double getMedian(){
-	if (minHeap.size() >= maxHeap.size()){
+	if (minHeap.size() > maxHeap.size()){
 	    return minHeap.peek();
 	}
 	if (maxHeap.size() > minHeap.size()){
