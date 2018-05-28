@@ -54,7 +54,7 @@ public class MazeSolver{
 	    Location[] neighbors = maze.getNeighbors(current);
 	    for(Location neighbor:neighbors){
 		try{
-		    maze.set(neighbor.getx(),neighbor.gety(), '?');		    
+		    maze.set(neighbor.getx(),neighbor.gety(), '?');   
 		    frontier.add(neighbor);
 		}
 		catch(NullPointerException e){}

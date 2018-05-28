@@ -8,84 +8,46 @@ public class Maze{
     Location start,end;
     private char[][]maze;
     boolean aStar;
-
-
-
-    /*
-      YOU MUST COMPLETE THIS METHOD!!!
-      YOU MUST COMPLETE THIS METHOD!!!
-      YOU MUST COMPLETE THIS METHOD!!!
-    */
-    public Location[] getNeighbors(Location L){
+    
+    public Location[] getNeighbors(Location l) {
         Location[] ans = new Location[4];
-	if (L.getx() == 0){
-	    if (L.gety() == 0){
-		Location l = new Location(1,0,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location m = new Location(0,1,L,L.getDistance()-1,L.getDSoFar()+1);
-	        ans[0] = l;
-		ans[1] = m;
-	    }
-	    else if (L.gety() == maze.length){
-		Location y = new Location(0,L.gety()-1,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(1,L.gety(),L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = y;
-		ans[1] = z;
-	    }
-	    else{
-		Location x = new Location(0,L.gety()+1,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location y = new Location(0,L.gety()-1,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(1,L.gety(),L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = x;
-		ans[1] = y;
-		ans[2] = z;
-		
-	    }
-	}
-	else if (L.gety() == 0){
-	    if (L.getx() == maze.length){
-		Location y = new Location(L.getx()-1,0,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(L.getx(),1,L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = y;
-		ans[1] = z;
-	    }
-	    else{
-		Location x = new Location(L.getx()+1,0,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location y = new Location(L.getx()-1,0,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(L.getx(),1,L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = x;
-		ans[1] = y;
-		ans[2] = z;
-	    }
-	}
-	else{
-	    if (L.gety() == maze.length){
-		Location x = new Location(L.getx()+1,0,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location y = new Location(L.getx()-1,0,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(L.getx(),1,L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = x;
-		ans[1] = y;
-		ans[2] = z;
-	    }
-	    else if (L.getx() == maze.length){
-		Location x = new Location(0,L.gety()+1,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location y = new Location(0,L.gety()-1,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(1,L.gety(),L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = x;
-		ans[1] = y;
-		ans[2] = z;
-	    }
-	    else{
-		Location w = new Location(L.getx(),L.gety()-1,L,L.getDistance()-1,L.getDSoFar()+1);
-		Location x = new Location(L.getx()+1,L.gety(),L,L.getDistance()-1,L.getDSoFar()+1);
-		Location y = new Location(L.getx()-1,L.gety(),L,L.getDistance()-1,L.getDSoFar()+1);
-		Location z = new Location(L.getx(),L.gety()+1,L,L.getDistance()-1,L.getDSoFar()+1);
-		ans[0] = w;
-		ans[1] = x;
-		ans[2] = y;
-		ans[3] = z;
-	    }
-	}
-	return ans;	    
+
+        if (l.getx() + 1 > 0 && l.getx() + 1 < maze.length && l.gety() > 0 && l.gety() < maze[0].length) {
+            if (maze[l.getx() + 1][l.gety()] == ' ' || maze[l.getx() + 1][l.gety()] == 'E') {
+                ans[0] = new Location(l.getx() + 1,l.gety(),l);
+            }
+        }
+        if (l.getx() - 1 > 0 && l.getx() - 1 < maze.length && l.gety() > 0 && l.gety() < maze[0].length) {
+            if (maze[l.getx() - 1][l.gety()] == ' ' || maze[l.getx() + 1][l.gety()] == 'E') {
+                ans[1] = new Location(l.getx() - 1,l.gety(),l);
+            }
+        }
+        if (l.getx() > 0 && l.getx() < maze.length && l.gety() + 1 > 0 && l.gety()+ 1 < maze[0].length) {
+            if (maze[l.getx()][l.gety() + 1] == ' ' || maze[l.getx()][l.gety() + 1] == 'E') {
+                ans[2] = new Location(l.getx(),l.gety() + 1,l);
+            }
+        }
+	if (l.getx() > 0 && l.getx() < maze.length && l.gety() - 1 > 0 && l.gety() - 1 < maze[0].length) {
+            if (maze[l.getx()][l.gety() - 1] == ' ' || maze[l.getx()][l.gety() - 1] == 'E') {
+                ans[2] = new Location(l.getx(),l.gety() - 1,l);
+            }
+        }
+        int current = 0;
+        for (Location x: ans) {
+            if (x != null) {
+                current++;
+            }
+        }
+        Location[] answer = new Location[current];
+        int index = 0;        
+        for (Location element: ans) {
+            if (element != null) {
+                answer[index] = element;
+                answer[index].move();              
+                index++;
+            }
+        }
+        return answer;
     }
 
     public Location getStart(){
@@ -159,8 +121,8 @@ public class Maze{
 	  The start/end Locations may need more information later when we add
 	  other kinds of frontiers!
 	*/
-	end = new Location(endr,endc,null,0,0);
-	start = new Location(startr,startc,null,0,0);
+	end = new Location(endr,endc,null);
+	start = new Location(startr,startc,null);
     }
     public Maze(String filename,boolean b){
 	aStar = true;
@@ -216,8 +178,8 @@ public class Maze{
 	  The start/end Locations may need more information later when we add
 	  other kinds of frontiers!
 	*/
-	end = new Location(endr,endc,null,0,0);
-	start = new Location(startr,startc,null,0,0);
+	end = new Location(endr,endc,null);
+	start = new Location(startr,startc,null);
     }
 
     public String toStringColor(){

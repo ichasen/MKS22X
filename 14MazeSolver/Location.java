@@ -2,12 +2,10 @@ public class Location implements Comparable<Location>{
     private int x,y,distance,distanceSoFar;
     private Location previous;
 
-    public Location(int _x, int _y, Location prev,int distanceFromEnd,int d){
+    public Location(int _x, int _y, Location prev){
 	x = _x;
 	y = _y;
 	previous = prev;
-	distance = distanceFromEnd;
-	distanceSoFar = d;
     }
     public int getDSoFar(){
 	return distanceSoFar;
@@ -26,6 +24,9 @@ public class Location implements Comparable<Location>{
     }
     public void setDSoFar(int n){
 	distanceSoFar = n;
+    }
+    public void move(){
+	distanceSoFar++;
     }
     public int compareTo(Location other){
 	if (other == null){
