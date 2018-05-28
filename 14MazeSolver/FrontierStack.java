@@ -1,14 +1,18 @@
-import java.util.Stack;
+import java.util.*;
+import java.io.*;
+@SuppressWarnings("unchecked")
 public class FrontierStack implements Frontier{
-    Stack frontier = new Stack();
+    private LinkedList<Location> frontier;
+    public FrontierStack(){
+	frontier = new LinkedList();
+    }
     public Location next(){
-	@SuppressWarnings("unchecked") Location ans = (Location)frontier.peek();
-	return ans;
+        return frontier.removeFirst();
     }
     public void add(Location n){
-	@SuppressWarnings("unchecked") frontier.push(n);
+	frontier.addFirst(n);
     }
     public boolean hasNext(){
-	return frontier.empty();
+	return frontier.size() > 0;
     }
 }

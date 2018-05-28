@@ -1,12 +1,13 @@
 import java.util.*;
 import java.io.*;
+@SuppressWarnings("unchecked")
 public class FrontierQueue implements Frontier{
-    Deque frontier = new Deque();
+    LinkedList<Location> frontier;
     public Location next(){
-	return frontier.removeFirst();
+	return frontier.removeLast();
     }
     public void add(Location n){
-	frontier.addLast(n);
+	frontier.addFirst(n);
     }
     public boolean hasNext(){
 	if (frontier.size() > 0){
