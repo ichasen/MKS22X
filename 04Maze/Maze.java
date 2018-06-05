@@ -4,7 +4,8 @@ public class Maze{
     private char[][]maze;
     int[][] possibleMoves  = new int[][] {{0,1},{0,-1},{1,0},{-1,0}};
     private boolean animate;//false by default
-    public Maze(String filename) throws FileNotFoundException{
+    public Maze(String filename){
+	try{
 	animate = false;
 	int x = 0;
 	int y = 0;
@@ -31,6 +32,10 @@ public class Maze{
 	}
 	if (x != 1 || y != 1){
 	    throw new IllegalStateException();
+	}
+	}
+	catch(FileNotFoundException e){
+	    System.exit(0);
 	}
     }
     private void wait(int millis){
