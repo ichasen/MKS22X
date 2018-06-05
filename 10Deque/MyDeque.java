@@ -10,7 +10,6 @@ public class MyDeque<E>{
 	data = (E[])new Object[10];
 	firstIndex = 0;
 	lastIndex = 0;
-	size = 0;
     }
     @SuppressWarnings("unchecked")
     public MyDeque(int initialCapacity){
@@ -20,86 +19,66 @@ public class MyDeque<E>{
 	data = (E[])new Object[initialCapacity];
 	firstIndex = 0;
 	lastIndex = 0;
-	size = 0;
     }
     public int size(){
 	return size;
     }
+    @SuppressWarnings("unchecked")
     public void resize(){
-	@SuppressWarnings("unchecked")E[] newArray = (E[]) new Object[data.length * 2];
+	E[] newArray = (E[]) new Object[size * 2];
 	for (int i = 0; i < data.length; i++) {
 	    newArray[i] = data[i];
 	}
-	firstIndex = 0;
-	lastIndex = newArray.length/2 - 1;
 	data = newArray;
+	firstIndex = 0;
+	lastIndex = size-1;
     }
     public void addFirst(E element){
-	if (element == null){
+	if(element == null){
 	    throw new NullPointerException();
 	}
-	if (size() == data.length || lastIndex == firstIndex - 1){
+	if(size == data.length){
 	    resize();
 	}
-	if (size() == 0){
-	    firstIndex = 0;
-	    lastIndex = 0;
-	    data[0] = element;
+	if (size != 0){
+	    firstIndex = (firstIndex - 1 + data.length) % data.length;
 	}
-	else{
-	    if (firstIndex == 0){
-		if (data[firstIndex] == null){
-		    data[firstIndex] = element;
-		    firstIndex = data.length-1;
-		}
-		else{
-		    firstIndex = data.length-1;
-		    data[firstIndex] = element;
-		}
-	    }
-	    else{
-		firstIndex--;
-		data[firstIndex] = element;
-	    }
-	}
+	data[firstIndex] = element;
 	size++;
     }
-
     public void addLast(E element){
-	if (element == null){
+	if(element == null){
 	    throw new NullPointerException();
 	}
-	if (size == data.length || firstIndex == lastIndex+1 || lastIndex == firstIndex + 1){
+	if(size() == data.length){
 	    resize();
 	}
-	lastIndex++;
+	if (size!=0){
+	    lastIndex = (lastIndex + 1) % data.length;
+	}
 	data[lastIndex] = element;
 	size++;
     }
     public E removeFirst(){
-	if (size() == 0){
+	if (size == 0){
 	    throw new NoSuchElementException();
 	}
 	E ans  = data[firstIndex];
-	if (firstIndex == data.length - 1){
-	    firstIndex = 0;
-	}
-	else{
-	    firstIndex++;
+	data[firstIndex] = null;
+	if (size>1){
+	    firstIndex = (firstIndex + 1) % data.length;
 	}
 	size--;
 	return ans;
     }
     public E removeLast(){
-	if (size() == 0){
+	if (size == 0){
 	    throw new NoSuchElementException();
 	}
 	E ans = data[lastIndex];
-	if (lastIndex == 0){
-	    lastIndex = data.length - 1;
-	}
-	else{
-	    lastIndex--;
+	data[lastIndex] = null;
+	if (size>1){
+	    lastIndex = (lastIndex - 1 + data.length) % data.length;
 	}
 	size--;
 	return ans;
@@ -118,55 +97,21 @@ public class MyDeque<E>{
     }
     public String toString(){
 	String ans = "[";
-	if (firstIndex < lastIndex){
-	    for (int x = firstIndex;x<=lastIndex;x++){
-		ans += data[x] + ", ";
-	    }
-	}
-	else if (firstIndex == lastIndex){
-	    if (data[firstIndex] != null){
-		ans += data[firstIndex] + "," + "]";
-	    }
-	    else{
-		ans += "]";
-		return ans;
+	if(firstIndex < lastIndex){
+	    for (int i = firstIndex; i < lastIndex; i++){
+		ans += data[i]+" , ";
 	    }
 	}
 	else{
-	    for (int i = firstIndex;i<data.length;i++){
-		ans += data[i] + ", ";
+	    for(int j = firstIndex; j<data.length; j++){
+		ans+=data[j]+", ";
 	    }
-	    for (int j = 0;j<=lastIndex;j++){
-		ans += data[j] + ", ";
+	    for(int x=0; x<=lastIndex; x++){
+		ans+=data[x]+", ";
 	    }
 	}
-	ans = ans.substring(0,ans.length()-2) + "]";
+	ans=ans.substring(0, ans.length()-2)+"]";
 	return ans;
-    }
-	    
-    public static void main (String[] args){
-	MyDeque<Integer> a = new MyDeque<>(5);
-	System.out.println(a);
-	a.addFirst(1);
-	System.out.println(a);
-	a.addFirst(10);
-	System.out.println(a);
-	a.addFirst(15);
-	System.out.println(a);
-	a.addLast(7);
-	System.out.println(a);
-	
-	a.addLast(5);
-	System.out.println(a);
-	a.removeLast();
-	System.out.println(a);
-	a.removeFirst();
-	System.out.println(a);
-	a.addFirst(10);
-	System.out.println(a);
-	System.out.println(a.getFirst());
-	System.out.println(a.getLast());
-	
     }	
 }
 	
