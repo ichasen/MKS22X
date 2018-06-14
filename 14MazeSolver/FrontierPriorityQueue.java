@@ -4,7 +4,7 @@ import java.io.*;
 public class FrontierPriorityQueue implements Frontier{
     private MyHeap<Location> data;
     public FrontierPriorityQueue(){
-	data = new MyHeap();
+	data = new MyHeap<Location>();
     }
     public Location next(){
 	return data.peek();
